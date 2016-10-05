@@ -2,17 +2,21 @@ package com.iacn.bilineat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.Toast;
 
 import com.iacn.bilineat.hook.LayoutHook;
 import com.iacn.bilineat.hook.MethodHook;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.callStaticMethod;
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 /**
@@ -41,6 +45,15 @@ public class XposedInit implements IXposedHookLoadPackage, IXposedHookInitPackag
                 return;
             }
         }
+
+        // 如果不支持当前哔哩哔哩版本,弹出 Toast 提示
+        findAndHookMethod("tv.danmaku.bili.ui.splash.SplashActivity", loadPackageParam.classLoader, "onCreate",
+                Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+                        Toast.makeText((Context) param.thisObject, "哔哩净化暂不支持你的版本哦~", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
