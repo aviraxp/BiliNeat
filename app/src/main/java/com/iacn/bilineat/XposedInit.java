@@ -1,11 +1,19 @@
 package com.iacn.bilineat;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+
 import com.iacn.bilineat.hook.LayoutHook;
+import com.iacn.bilineat.hook.MethodHook;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+
+import static de.robv.android.xposed.XposedHelpers.callMethod;
+import static de.robv.android.xposed.XposedHelpers.callStaticMethod;
+import static de.robv.android.xposed.XposedHelpers.findClass;
 
 /**
  * Created by iAcn on 2016/10/5
@@ -14,9 +22,25 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class XposedInit implements IXposedHookLoadPackage, IXposedHookInitPackageResources {
 
+    private static final String[] mSupportVersions = {"4.25.0", "4.26.3", "4.27.0"};
+
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
+        if (!"tv.danmaku.bili".equals(loadPackageParam.packageName)) return;
 
+        Object activityThread = callStaticMethod(findClass("android.app.ActivityThread", null), "currentActivityThread");
+        Context context = (Context) callMethod(activityThread, "getSystemContext");
+
+        String currentVersion = context.getPackageManager()
+                .getPackageInfo("tv.danmaku.bili", PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).versionName;
+
+        // 判断插件是否支持当前哔哩哔哩版本
+        for (String version : mSupportVersions) {
+            if (version.equals(currentVersion)) {
+                new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
+                return;
+            }
+        }
     }
 
     @Override
