@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
 
@@ -16,6 +17,18 @@ import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
 public class MethodHook {
 
     private ClassLoader mClassLoader;
+
+    /**
+     * 处理侧滑菜单、发现、Toolbar、分类里的广告开关
+     *
+     * @param className  广告开关类名
+     * @param methodName 具体项目的方法名
+     * @param state      开关状态
+     */
+    private void hookResult(String className, String methodName, boolean state) {
+        findAndHookMethod("bl." + className, mClassLoader, methodName,
+                XC_MethodReplacement.returnConstant(state));
+    }
 
     /**
      * 根据返回值类型来进行 Hook
