@@ -3,7 +3,7 @@ package com.iacn.bilineat.hook;
 import android.os.Bundle;
 import android.view.View;
 
-import com.iacn.bilineat.SettingActivity;
+import com.iacn.bilineat.ui.SettingActivity;
 
 import java.lang.reflect.Method;
 import java.util.List;

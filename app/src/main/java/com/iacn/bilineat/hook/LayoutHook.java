@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iacn.bilineat.SettingActivity;
+import com.iacn.bilineat.ui.SettingActivity;
 
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
