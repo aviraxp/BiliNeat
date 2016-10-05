@@ -1,8 +1,10 @@
 package com.iacn.bilineat.hook;
 
 import android.content.res.XResources;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.iacn.bilineat.SettingActivity;
 
@@ -32,6 +34,18 @@ public class LayoutHook {
                     RelativeLayout rl = (RelativeLayout) layoutInflatedParam.view.findViewById(layoutInflatedParam.res
                             .getIdentifier("group", "id", "tv.danmaku.bili"));
                     rl.setVisibility(View.GONE);
+                }
+            });
+        }
+
+        // 将评论里的部分网址转换为可点击的链接
+        if (xSharedPref.getBoolean("cbp_link", false)) {
+            res.hookLayout("tv.danmaku.bili", "layout", "bili_app_layout_list_item_feedback_item_include", new XC_LayoutInflated() {
+                @Override
+                public void handleLayoutInflated(LayoutInflatedParam layoutInflatedParam) throws Throwable {
+                    TextView textView = (TextView) layoutInflatedParam.view.findViewById(layoutInflatedParam.res
+                            .getIdentifier("message", "id", "tv.danmaku.bili"));
+                    textView.setAutoLinkMask(Linkify.WEB_URLS);
                 }
             });
         }
