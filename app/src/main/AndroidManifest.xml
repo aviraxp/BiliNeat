@@ -16,16 +16,16 @@
             </intent-filter>
         </activity>
 
-    </application>
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="哔哩哔哩去广告插件" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="30+" />
 
-    <meta-data
-        android:name="xposedmodule"
-        android:value="true" />
-    <meta-data
-        android:name="xposeddescription"
-        android:value="哔哩哔哩去广告插件" />
-    <meta-data
-        android:name="xposedminversion"
-        android:value="30+" />
+    </application>
 
 </manifest>
