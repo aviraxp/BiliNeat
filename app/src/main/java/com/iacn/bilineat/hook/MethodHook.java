@@ -31,6 +31,13 @@ public class MethodHook {
     }
 
     /**
+     * 使用返回值类型查找并处理侧滑菜单、发现、Toolbar、分类里的广告开关
+     */
+    private void hookResult(String className, String methodName, Class<?> returnType, boolean state) {
+        hookMethodByReturnType("bl." + className, methodName, returnType, state);
+    }
+
+    /**
      * 根据返回值类型来进行 Hook
      */
     private void hookMethodByReturnType(String className, String methodName, Class<?> returnType, boolean value) {
