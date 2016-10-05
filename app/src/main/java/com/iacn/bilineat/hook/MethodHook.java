@@ -45,6 +45,23 @@ public class MethodHook {
         boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
 
         int pageIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
+
+        // 根据当前版本决定要Hook的类和方法名
+        switch (currentVersion) {
+            case "4.25.0":
+                hookResult("caa", "f", boolean.class, isShowCategory);
+                hookResult("caa", "g", boolean.class, isShowToolBar);
+                hookResult("caa", "h", isShowDraw);
+                hookResult("caa", "i", isShowFound);
+
+                hookTheme("fbi", "bcf");
+                break;
+        }
+
+        hookThemeDialog();
+        hookBangumi();
+        hookMovie();
+        hookPage(pageIndex);
     }
 
     /**
