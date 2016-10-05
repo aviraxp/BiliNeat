@@ -81,6 +81,19 @@ public class MethodHook {
     }
 
     /**
+     * 破解版权番下载
+     */
+    private void hookBangumi() {
+        Method[] methods = findMethodsByExactParameters(findClass("com.bilibili.api.bangumi.BiliBangumiSeason", mClassLoader), boolean.class);
+        XposedBridge.hookMethod(methods[0], new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                setBooleanField(param.thisObject, "mDownloadable", true);
+            }
+        });
+    }
+
+    /**
      * 根据返回值类型来进行 Hook
      */
     private void hookMethodByReturnType(String className, String methodName, Class<?> returnType, boolean value) {
