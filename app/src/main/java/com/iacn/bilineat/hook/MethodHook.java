@@ -87,8 +87,11 @@ public class MethodHook {
      * 破解版权番下载
      */
     private void hookBangumi() {
-        Method[] methods = findMethodsByExactParameters(findClass("com.bilibili.api.bangumi.BiliBangumiSeason", mClassLoader), boolean.class);
+        Method[] methods = findMethodsByExactParameters(
+                findClass("com.bilibili.api.bangumi.BiliBangumiSeason", mClassLoader), boolean.class);
+
         XposedBridge.hookMethod(methods[0], new XC_MethodHook() {
+
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 setBooleanField(param.thisObject, "mDownloadable", true);
@@ -103,12 +106,14 @@ public class MethodHook {
      */
     private void hookPage(final int pageIndex) {
         if (pageIndex != 1) {
-            findAndHookMethod("tv.danmaku.bili.ui.main.HomeFragment", mClassLoader, "onViewCreated", View.class, Bundle.class, new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    setIntField(param.thisObject, "b", pageIndex);
-                }
-            });
+            findAndHookMethod("tv.danmaku.bili.ui.main.HomeFragment", mClassLoader,
+                    "onViewCreated", View.class, Bundle.class, new XC_MethodHook() {
+
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                            setIntField(param.thisObject, "b", pageIndex);
+                        }
+                    });
         }
     }
 
