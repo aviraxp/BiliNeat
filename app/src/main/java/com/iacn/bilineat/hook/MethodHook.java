@@ -67,6 +67,13 @@ public class MethodHook {
     }
 
     /**
+     * 去除已购买主题过期的提示框
+     */
+    private void hookThemeDialog() {
+        findAndHookMethod("tv.danmaku.bili.MainActivity", mClassLoader, "c", XC_MethodReplacement.DO_NOTHING);
+    }
+
+    /**
      * 根据返回值类型来进行 Hook
      */
     private void hookMethodByReturnType(String className, String methodName, Class<?> returnType, boolean value) {
