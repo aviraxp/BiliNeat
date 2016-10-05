@@ -74,6 +74,13 @@ public class MethodHook {
     }
 
     /**
+     * 破解版权电影下载
+     */
+    private void hookMovie() {
+        hookMethodByReturnType("com.bilibili.api.BiliVideoDetail", "c", boolean.class, true);
+    }
+
+    /**
      * 根据返回值类型来进行 Hook
      */
     private void hookMethodByReturnType(String className, String methodName, Class<?> returnType, boolean value) {
