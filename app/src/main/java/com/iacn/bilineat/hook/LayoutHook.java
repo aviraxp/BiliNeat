@@ -49,5 +49,15 @@ public class LayoutHook {
                 }
             });
         }
+
+        // 去除推荐里的游戏中心
+        res.hookLayout("tv.danmaku.bili", "layout", "bili_app_index_more_game", new XC_LayoutInflated() {
+            @Override
+            public void handleLayoutInflated(LayoutInflatedParam layoutInflatedParam) throws Throwable {
+                TextView game = (TextView) layoutInflatedParam.view.findViewById(layoutInflatedParam.res
+                        .getIdentifier("more_action", "id", "tv.danmaku.bili"));
+                game.setVisibility(View.GONE);
+            }
+        });
     }
 }
