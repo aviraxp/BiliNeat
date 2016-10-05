@@ -1,5 +1,8 @@
 package com.iacn.bilineat.hook;
 
+import android.os.Bundle;
+import android.view.View;
+
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -91,6 +94,22 @@ public class MethodHook {
                 setBooleanField(param.thisObject, "mDownloadable", true);
             }
         });
+    }
+
+    /**
+     * 设置默认进入页面
+     *
+     * @param pageIndex 页面的角标值
+     */
+    private void hookPage(final int pageIndex) {
+        if (pageIndex != 1) {
+            findAndHookMethod("tv.danmaku.bili.ui.main.HomeFragment", mClassLoader, "onViewCreated", View.class, Bundle.class, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    setIntField(param.thisObject, "b", pageIndex);
+                }
+            });
+        }
     }
 
     /**
