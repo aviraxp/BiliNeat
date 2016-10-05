@@ -3,11 +3,14 @@ package com.iacn.bilineat.hook;
 import android.os.Bundle;
 import android.view.View;
 
+import com.iacn.bilineat.SettingActivity;
+
 import java.lang.reflect.Method;
 import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
@@ -25,6 +28,24 @@ import static de.robv.android.xposed.XposedHelpers.setIntField;
 public class MethodHook {
 
     private ClassLoader mClassLoader;
+
+    /**
+     * Method Hook的具体实现方法
+     *
+     * @param classLoader    类加载器
+     * @param currentVersion 当前版本
+     */
+    public void doHook(ClassLoader classLoader, String currentVersion) {
+        mClassLoader = classLoader;
+        XSharedPreferences xSharedPref = new XSharedPreferences(SettingActivity.class.getPackage().getName());
+
+        boolean isShowCategory = !xSharedPref.getBoolean("cbp_category", true);
+        boolean isShowFound = !xSharedPref.getBoolean("cbp_found", true);
+        boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
+        boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
+
+        int pageIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
+    }
 
     /**
      * 处理侧滑菜单、发现、Toolbar、分类里的广告开关
