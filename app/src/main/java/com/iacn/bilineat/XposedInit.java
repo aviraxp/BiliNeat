@@ -10,7 +10,9 @@ import com.iacn.bilineat.hook.MethodHook;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -24,9 +26,16 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
  * Emali iAcn0301@foxmail.com
  */
 
-public class XposedInit implements IXposedHookLoadPackage, IXposedHookInitPackageResources {
+public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
 
+    public static XSharedPreferences xSharedPref;
     private static final String[] mSupportVersions = {"4.25.0", "4.26.3", "4.27.0"};
+
+    @Override
+    public void initZygote(StartupParam startupParam) throws Throwable {
+        xSharedPref = new XSharedPreferences(getClass().getPackage().getName());
+        xSharedPref.makeWorldReadable();
+    }
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
@@ -41,6 +50,7 @@ public class XposedInit implements IXposedHookLoadPackage, IXposedHookInitPackag
         // 判断插件是否支持当前哔哩哔哩版本
         for (String version : mSupportVersions) {
             if (version.equals(currentVersion)) {
+                xSharedPref.reload();
                 new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
                 return;
             }
@@ -60,6 +70,7 @@ public class XposedInit implements IXposedHookLoadPackage, IXposedHookInitPackag
     public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resParam) throws Throwable {
         if (!"tv.danmaku.bili".equals(resParam.packageName)) return;
 
+        xSharedPref.reload();
         new LayoutHook().doHook(resParam.res);
     }
 }

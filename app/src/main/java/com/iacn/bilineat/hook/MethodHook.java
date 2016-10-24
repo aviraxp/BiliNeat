@@ -3,16 +3,14 @@ package com.iacn.bilineat.hook;
 import android.os.Bundle;
 import android.view.View;
 
-import com.iacn.bilineat.ui.SettingActivity;
-
 import java.lang.reflect.Method;
 import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 
+import static com.iacn.bilineat.XposedInit.xSharedPref;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
@@ -37,14 +35,13 @@ public class MethodHook {
      */
     public void doHook(ClassLoader classLoader, String currentVersion) {
         mClassLoader = classLoader;
-        XSharedPreferences xSharedPref = new XSharedPreferences(SettingActivity.class.getPackage().getName());
 
         boolean isShowCategory = !xSharedPref.getBoolean("cbp_category", true);
         boolean isShowFound = !xSharedPref.getBoolean("cbp_found", true);
         boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
         boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
 
-        boolean isDisMyVip = xSharedPref.getBoolean("disable_my_vip", false);
+        final boolean isDisMyVip = !xSharedPref.getBoolean("disable_my_vip", false);
 
         int homeIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
 
@@ -57,7 +54,16 @@ public class MethodHook {
                 hookResult("cdj", "i", boolean.class, isShowFound);
                 hookResult("cdj", "j", false);
 
-                hookResult("cdj", "s", isDisMyVip);
+                findAndHookMethod("bl.cdj", mClassLoader, "s", new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        System.out.println("原始 ---> " + param.getResult());
+                        System.out.println("修改为 ---> " + isDisMyVip);
+                        param.setResult(isDisMyVip);
+                    }
+                });
+
+//                hookResult("cdj", "s", isDisMyVip);
 
                 hookTheme("ffi", "bco");
                 break;

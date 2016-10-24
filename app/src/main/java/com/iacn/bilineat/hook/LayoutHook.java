@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iacn.bilineat.ui.SettingActivity;
-
-import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
+
+import static com.iacn.bilineat.XposedInit.xSharedPref;
 
 /**
  * Created by iAcn on 2016/10/5
@@ -24,8 +23,6 @@ public class LayoutHook {
      * @param res Xposed 的 XResources
      */
     public void doHook(XResources res) {
-        XSharedPreferences xSharedPref = new XSharedPreferences(SettingActivity.class.getPackage().getName());
-
         // 去除发现里的兴趣圈
         if (xSharedPref.getBoolean("cbp_group", false)) {
             res.hookLayout("tv.danmaku.bili", "layout", "bili_app_fragment_discover", new XC_LayoutInflated() {

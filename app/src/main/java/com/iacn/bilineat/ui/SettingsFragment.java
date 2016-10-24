@@ -1,6 +1,7 @@
 package com.iacn.bilineat.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,8 +10,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.iacn.bilineat.R;
-
-import static android.content.Context.MODE_WORLD_READABLE;
 
 /**
  * Created by iAcn on 2016/10/5
@@ -26,7 +25,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 设置SharePreference文件为全局可读
-        getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_READABLE);
+        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
         addPreferencesFromResource(R.xml.pref_settings);
 
         mSharePref = getPreferenceManager().getSharedPreferences();
