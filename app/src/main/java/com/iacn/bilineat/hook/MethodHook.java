@@ -40,8 +40,7 @@ public class MethodHook {
         boolean isShowFound = !xSharedPref.getBoolean("cbp_found", true);
         boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
         boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
-
-        final boolean isDisMyVip = !xSharedPref.getBoolean("disable_my_vip", false);
+        boolean isDisMyVip = !xSharedPref.getBoolean("disable_my_vip", false);
 
         int homeIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
 
@@ -54,16 +53,7 @@ public class MethodHook {
                 hookResult("cdj", "i", boolean.class, isShowFound);
                 hookResult("cdj", "j", false);
 
-                findAndHookMethod("bl.cdj", mClassLoader, "s", new XC_MethodHook() {
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        System.out.println("原始 ---> " + param.getResult());
-                        System.out.println("修改为 ---> " + isDisMyVip);
-                        param.setResult(isDisMyVip);
-                    }
-                });
-
-//                hookResult("cdj", "s", isDisMyVip);
+                hookResult("cdj", "s", isDisMyVip);
 
                 hookTheme("ffi", "bco");
                 break;
