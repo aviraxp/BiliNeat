@@ -31,6 +31,12 @@
         android:summary="去除发现里的兴趣圈"
         android:title="关闭兴趣圈" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="disable_my_vip"
+        android:summary="去除侧滑菜单里的我的大会员"
+        android:title="关闭我的大会员" />
+
     <PreferenceCategory android:title="功能">
 
         <CheckBoxPreference

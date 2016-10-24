@@ -44,7 +44,9 @@ public class MethodHook {
         boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
         boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
 
-        int pageIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
+        boolean isDisMyVip = xSharedPref.getBoolean("disable_my_vip", false);
+
+        int homeIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
@@ -54,6 +56,8 @@ public class MethodHook {
                 hookResult("cdj", "h", boolean.class, isShowDraw);
                 hookResult("cdj", "i", boolean.class, isShowFound);
                 hookResult("cdj", "j", false);
+
+                hookResult("cdj", "s", isDisMyVip);
 
                 hookTheme("ffi", "bco");
                 break;
@@ -81,7 +85,7 @@ public class MethodHook {
         hookThemeDialog();
         hookBangumi();
         hookMovie();
-        hookPage(pageIndex);
+        hookPage(homeIndex);
     }
 
     /**
