@@ -41,6 +41,7 @@ public class MethodHook {
         boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
         boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
         boolean isDisMyVip = !xSharedPref.getBoolean("disable_my_vip", false);
+        boolean isDisMall = !xSharedPref.getBoolean("disable_mall", false);
 
         int homeIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
 
@@ -54,6 +55,7 @@ public class MethodHook {
                 hookResult("cdj", "j", false);
 
                 hookResult("cdj", "s", isDisMyVip);
+                hookResult("cdj", "x", isDisMall);
 
                 hookTheme("ffi", "bco");
                 break;
