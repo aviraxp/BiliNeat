@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
+        finish();
+        overridePendingTransition(0, 0);
         return true;
     }
 
