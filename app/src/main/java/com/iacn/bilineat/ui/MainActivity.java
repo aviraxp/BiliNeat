@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.iacn.bilineat.R;
 import com.iacn.bilineat.ui.fragment.AboutFragment;
@@ -33,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mBottomBar = (BottomNavigationView) findViewById(R.id.bottom_bar);
 
+        mSharePref = getSharedPreferences("setting", MODE_WORLD_READABLE);
+
+        if (mSharePref.getBoolean("show_explain", true)) showExplainDialog();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         final List<Fragment> pageList = new ArrayList<>();
         pageList.add(new NeatFragment());
         pageList.add(new ActionFragment());
@@ -49,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 return pageList.size();
             }
         });
+    }
 
-        mSharePref = getSharedPreferences("setting", MODE_WORLD_READABLE);
-
-        if (mSharePref.getBoolean("show_explain", true)) showExplainDialog();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
     }
 
     /**

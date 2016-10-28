@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pink">#fb7299</color>
+    <color name="pink">#FB7299</color>
+    <color name="gray">#EAEAEA</color>
 </resources>
