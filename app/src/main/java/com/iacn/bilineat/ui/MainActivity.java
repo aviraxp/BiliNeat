@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.iacn.bilineat.R;
+import com.iacn.bilineat.ui.fragment.ActionFragment;
 import com.iacn.bilineat.ui.fragment.NeatFragment;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         final List<Fragment> pageList = new ArrayList<>();
         pageList.add(new NeatFragment());
-        pageList.add(new SettingsFragment());
+        pageList.add(new ActionFragment());
 
         mPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override

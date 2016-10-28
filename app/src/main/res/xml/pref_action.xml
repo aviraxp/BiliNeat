@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="auto_link"
+        android:summary="自动将网址转为可点击的链接"
+        android:title="开启文字链接" />
+
+    <ListPreference
+        android:dialogTitle="选择默认进入页面"
+        android:entries="@array/default_page"
+        android:entryValues="@array/default_page_value"
+        android:key="default_page"
+        android:title="默认进入页面" />
+
+</PreferenceScreen>
