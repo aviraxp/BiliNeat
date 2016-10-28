@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.iacn.bilineat.R;
@@ -34,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mBottomBar = (BottomNavigationView) findViewById(R.id.bottom_bar);
 
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mSharePref = getSharedPreferences("setting", MODE_WORLD_READABLE);
 
         if (mSharePref.getBoolean("show_explain", true)) showExplainDialog();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final List<Fragment> pageList = new ArrayList<>();
         pageList.add(new NeatFragment());

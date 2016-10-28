@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/pink</item>
         <item name="colorAccent">@color/pink</item>
         <item name="android:windowBackground">@color/gray</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
+    <style name="TitleStyle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
