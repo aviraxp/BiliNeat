@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="category_game"
+        android:summary="去除分区里的游戏中心"
+        android:title="关闭分区广告" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="found_game"
+        android:summary="去除发现里的游戏中心"
+        android:title="关闭发现广告" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="toolbar_game"
+        android:summary="去除Toolbar里的游戏中心按钮"
+        android:title="关闭顶栏广告" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="drawer_promote"
+        android:summary="去除侧滑菜单里的应用推荐"
+        android:title="关闭侧边栏广告" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="found_group"
+        android:summary="去除发现里的兴趣圈"
+        android:title="关闭兴趣圈" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="found_mall"
+        android:summary="去除发现里的周边商城"
+        android:title="关闭周边商城" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="drawer_my_vip"
+        android:summary="去除侧滑菜单里的我的大会员"
+        android:title="关闭我的大会员" />
+
+</PreferenceScreen>

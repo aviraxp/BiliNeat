@@ -25,7 +25,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 设置SharePreference文件为全局可读
-        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+//        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+
         addPreferencesFromResource(R.xml.pref_settings);
 
         mSharePref = getPreferenceManager().getSharedPreferences();
