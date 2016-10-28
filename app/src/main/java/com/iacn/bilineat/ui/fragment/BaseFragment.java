@@ -1,5 +1,6 @@
 package com.iacn.bilineat.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
@@ -16,7 +17,7 @@ public abstract class BaseFragment extends PreferenceFragment {
         // 统一所有 Preference 的设置文件名
         getPreferenceManager().setSharedPreferencesName("setting");
         // 使设置文件全局可读
-//        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
 
         addPreferencesFromResource(getXmlId());
         initPreference();
