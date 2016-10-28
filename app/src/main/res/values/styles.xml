@@ -2,6 +2,9 @@
 
     <style name="AppTheme" parent="AppThemeBase" />
 
-    <style name="AppThemeBase" parent="android:Theme.DeviceDefault.Light.DarkActionBar" />
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorAccent">@color/pink</item>
+    </style>
 
 </resources>

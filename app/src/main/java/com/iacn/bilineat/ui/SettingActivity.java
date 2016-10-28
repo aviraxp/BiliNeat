@@ -13,8 +13,6 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         StatusBarUtils.setColor(this, getResources().getColor(R.color.pink));
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

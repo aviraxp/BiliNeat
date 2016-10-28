@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_neat"
+        android:checked="true"
+        android:icon="@drawable/ic_neat"
+        android:title="净化" />
+
+    <item
+        android:id="@+id/menu_action"
+        android:icon="@drawable/ic_action"
+        android:title="功能" />
+
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_about"
+        android:title="关于" />
+
+</menu>
