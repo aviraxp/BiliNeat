@@ -5,11 +5,13 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.iacn.bilineat.R;
@@ -56,6 +58,57 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 return pageList.size();
+            }
+        });
+
+        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                Menu menu = mBottomBar.getMenu();
+
+                switch (position) {
+                    case 0:
+                        menu.getItem(0).setChecked(true);
+                        menu.getItem(1).setChecked(false);
+                        menu.getItem(2).setChecked(false);
+                        break;
+
+                    case 1:
+                        menu.getItem(0).setChecked(false);
+                        menu.getItem(1).setChecked(true);
+                        menu.getItem(2).setChecked(false);
+                        break;
+
+                    case 2:
+                        menu.getItem(0).setChecked(false);
+                        menu.getItem(1).setChecked(false);
+                        menu.getItem(2).setChecked(true);
+                        break;
+                }
+            }
+        });
+
+        mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_neat:
+                        mPager.setCurrentItem(0);
+                        break;
+
+                    case R.id.menu_action:
+                        mPager.setCurrentItem(1);
+                        break;
+
+                    case R.id.menu_about:
+                        mPager.setCurrentItem(2);
+                        break;
+
+                    default:
+                        return false;
+                }
+
+                return true;
             }
         });
     }
