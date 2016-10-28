@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:summary="iAcn"
+        android:title="作者" />
+
+    <Preference
+        android:summary="点击打开插件更新地址"
+        android:title="下载地址">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://pan.baidu.com/s/1gfqIGev" />
+
+    </Preference>
+
+</PreferenceScreen>
