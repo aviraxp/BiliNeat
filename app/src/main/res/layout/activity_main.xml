@@ -26,6 +26,8 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:elevation="8dp"
         app:itemIconTint="@color/selector_bottom_color"
         app:itemTextColor="@color/selector_bottom_color"
         app:menu="@menu/bottom_bar" />
