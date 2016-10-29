@@ -10,6 +10,11 @@
         android:title="作者" />
 
     <Preference
+        android:key="donate"
+        android:summary="点击会尝试打开支付宝"
+        android:title="捐赠" />
+
+    <Preference
         android:summary="点击打开插件更新地址"
         android:title="下载地址">
 
