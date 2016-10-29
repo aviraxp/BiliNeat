@@ -56,17 +56,5 @@ public class LayoutHook {
                 game.setVisibility(View.GONE);
             }
         });
-
-        // 添加超清优先
-        res.setReplacement("tv.danmaku.bili", "array", "pref_player_mediaSource_entries", new String[]{
-                "自动选择",
-                "流畅优先",
-                "高清优先",
-                "超清优先"});
-        res.setReplacement("tv.danmaku.bili", "array", "pref_player_mediaSource_entryValues", new String[]{
-                "0",
-                "100",
-                "200",
-                "400"});
     }
 }
