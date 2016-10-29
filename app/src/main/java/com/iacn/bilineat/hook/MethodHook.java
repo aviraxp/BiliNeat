@@ -1,7 +1,14 @@
 package com.iacn.bilineat.hook;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.view.View;
+
+import com.iacn.bilineat.XposedInit;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -11,6 +18,7 @@ import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 
 import static com.iacn.bilineat.XposedInit.xSharedPref;
+import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
@@ -78,6 +86,7 @@ public class MethodHook {
         hookBangumi();
         hookMovie();
         hookPage(homeIndex);
+        addNeatEntrance();
     }
 
     /**
@@ -182,5 +191,36 @@ public class MethodHook {
                 XposedBridge.hookMethod(method, XC_MethodReplacement.returnConstant(value));
             }
         }
+    }
+
+    private void addNeatEntrance() {
+        findAndHookMethod("tv.danmaku.bili.preferences.BiliPreferencesActivity$a", mClassLoader,
+                "onCreate", Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        PreferenceScreen screen = (PreferenceScreen)
+                                callMethod(param.thisObject, "getPreferenceScreen");
+
+                        final Context context = (Context) callMethod(param.thisObject, "getActivity");
+
+                        Preference preference = new Preference(context);
+                        preference.setTitle("净化设置");
+                        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                            @Override
+                            public boolean onPreferenceClick(Preference preference) {
+                                String neatPackageName = XposedInit.class.getPackage().getName();
+
+                                Intent intent = new Intent();
+                                intent.setComponent(new ComponentName(
+                                        neatPackageName, neatPackageName + ".ui.MainActivity"));
+
+                                context.startActivity(intent);
+                                return true;
+                            }
+                        });
+
+                        screen.addPreference(preference);
+                    }
+                });
     }
 }
