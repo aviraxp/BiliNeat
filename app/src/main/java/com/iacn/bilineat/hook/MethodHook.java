@@ -72,25 +72,6 @@ public class MethodHook {
 
                 hookTheme("ffi", "bco");
                 break;
-
-            case "4.26.3":
-                hookResult("cag", "f", boolean.class, isShowCategory);
-                hookResult("cag", "g", boolean.class, isShowToolBar);
-                hookResult("cag", "h", isShowDraw);
-                hookResult("cag", "i", isShowFound);
-                hookResult("cag", "j", false);
-
-                hookTheme("fbm", "bch");
-                break;
-
-            case "4.25.0":
-                hookResult("caa", "f", boolean.class, isShowCategory);
-                hookResult("caa", "g", boolean.class, isShowToolBar);
-                hookResult("caa", "h", isShowDraw);
-                hookResult("caa", "i", isShowFound);
-
-                hookTheme("fbi", "bcf");
-                break;
         }
 
         hookThemeDialog();
