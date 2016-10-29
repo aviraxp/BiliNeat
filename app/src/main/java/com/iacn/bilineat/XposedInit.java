@@ -29,11 +29,12 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
 
     public static XSharedPreferences xSharedPref;
-    private static final String[] mSupportVersions = {"4.25.0", "4.26.3", "4.27.0"};
+    private static final String[] mSupportVersions = {"4.25.0", "4.26.3", "4.27.0",};
+
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-        xSharedPref = new XSharedPreferences(getClass().getPackage().getName());
+        xSharedPref = new XSharedPreferences(getClass().getPackage().getName(), "setting");
         xSharedPref.makeWorldReadable();
     }
 

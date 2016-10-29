@@ -36,14 +36,14 @@ public class MethodHook {
     public void doHook(ClassLoader classLoader, String currentVersion) {
         mClassLoader = classLoader;
 
-        boolean isShowCategory = !xSharedPref.getBoolean("cbp_category", true);
-        boolean isShowFound = !xSharedPref.getBoolean("cbp_found", true);
-        boolean isShowToolBar = !xSharedPref.getBoolean("cbp_toolbar", true);
-        boolean isShowDraw = !xSharedPref.getBoolean("cbp_draw", true);
-        boolean isDisMyVip = !xSharedPref.getBoolean("disable_my_vip", false);
-        boolean isDisMall = !xSharedPref.getBoolean("disable_mall", false);
+        boolean isShowCategory = !xSharedPref.getBoolean("category_game", true);
+        boolean isShowFound = !xSharedPref.getBoolean("found_game", true);
+        boolean isShowToolBar = !xSharedPref.getBoolean("toolbar_game", true);
+        boolean isShowDraw = !xSharedPref.getBoolean("drawer_promote", true);
+        boolean isDisMyVip = !xSharedPref.getBoolean("drawer_my_vip", false);
+        boolean isDisMall = !xSharedPref.getBoolean("found_mall", false);
 
-        int homeIndex = Integer.parseInt(xSharedPref.getString("lsp_default_page", "1"));
+        int homeIndex = Integer.parseInt(xSharedPref.getString("default_page", "1"));
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {

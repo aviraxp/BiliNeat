@@ -24,7 +24,7 @@ public class LayoutHook {
      */
     public void doHook(XResources res) {
         // 去除发现里的兴趣圈
-        if (xSharedPref.getBoolean("cbp_group", false)) {
+        if (xSharedPref.getBoolean("found_group", false)) {
             res.hookLayout("tv.danmaku.bili", "layout", "bili_app_fragment_discover", new XC_LayoutInflated() {
                 @Override
                 public void handleLayoutInflated(LayoutInflatedParam layoutInflatedParam) throws Throwable {
@@ -36,7 +36,7 @@ public class LayoutHook {
         }
 
         // 将评论里的部分网址转换为可点击的链接
-        if (xSharedPref.getBoolean("cbp_link", false)) {
+        if (xSharedPref.getBoolean("auto_link", false)) {
             res.hookLayout("tv.danmaku.bili", "layout", "bili_app_layout_list_item_feedback_item_include", new XC_LayoutInflated() {
                 @Override
                 public void handleLayoutInflated(LayoutInflatedParam layoutInflatedParam) throws Throwable {
