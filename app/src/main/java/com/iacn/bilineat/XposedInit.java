@@ -34,7 +34,7 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-        xSharedPref = new XSharedPreferences(getClass().getPackage().getName(), "setting");
+        xSharedPref = new XSharedPreferences(BuildConfig.APPLICATION_ID, "setting");
         xSharedPref.makeWorldReadable();
     }
 

@@ -9,7 +9,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.View;
 
-import com.iacn.bilineat.XposedInit;
+import com.iacn.bilineat.BuildConfig;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -206,11 +206,9 @@ public class MethodHook {
                         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                             @Override
                             public boolean onPreferenceClick(Preference preference) {
-                                String neatPackageName = XposedInit.class.getPackage().getName();
-
                                 Intent intent = new Intent();
-                                intent.setComponent(new ComponentName(
-                                        neatPackageName, neatPackageName + ".ui.MainActivity"));
+                                intent.setComponent(new ComponentName(BuildConfig.APPLICATION_ID,
+                                        BuildConfig.APPLICATION_ID + ".ui.MainActivity"));
 
                                 activity.startActivity(intent);
                                 activity.overridePendingTransition(0, 0);
