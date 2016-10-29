@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.widget.Toast;
 
+import com.iacn.bilineat.BuildConfig;
 import com.iacn.bilineat.R;
 import com.iacn.bilineat.ui.MainActivity;
 
@@ -37,8 +38,9 @@ public class AboutFragment extends BaseFragment {
         mComponentName = new ComponentName(getActivity(), MainActivity.class.getName() + "-Alias");
         mSharedPref = getActivity().getSharedPreferences("setting", Context.MODE_WORLD_READABLE);
 
-        SwitchPreference hideLauncher = (SwitchPreference) findPreference("hide_launcher");
         Preference donate = findPreference("donate");
+        findPreference("version").setSummary(BuildConfig.VERSION_NAME);
+        SwitchPreference hideLauncher = (SwitchPreference) findPreference("hide_launcher");
 
         hideLauncher.setPersistent(false);
         hideLauncher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
