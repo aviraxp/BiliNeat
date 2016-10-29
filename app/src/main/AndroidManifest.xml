@@ -9,14 +9,33 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".ui.MainActivity">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
+
+        <activity-alias
+            android:name=".ui.MainActivity-Alias"
+            android:enabled="false"
+            android:targetActivity=".ui.MainActivity">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+
+        </activity-alias>
 
         <meta-data
             android:name="xposedmodule"
