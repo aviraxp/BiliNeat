@@ -114,9 +114,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
+    public void onBackPressed() {
+        super.onBackPressed();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
         return true;
     }
 

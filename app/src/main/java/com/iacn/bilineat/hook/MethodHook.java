@@ -1,7 +1,7 @@
 package com.iacn.bilineat.hook;
 
+import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -201,9 +201,9 @@ public class MethodHook {
                         PreferenceScreen screen = (PreferenceScreen)
                                 callMethod(param.thisObject, "getPreferenceScreen");
 
-                        final Context context = (Context) callMethod(param.thisObject, "getActivity");
+                        final Activity activity = (Activity) callMethod(param.thisObject, "getActivity");
 
-                        Preference preference = new Preference(context);
+                        Preference preference = new Preference(activity);
                         preference.setTitle("净化设置");
                         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                             @Override
@@ -214,7 +214,9 @@ public class MethodHook {
                                 intent.setComponent(new ComponentName(
                                         neatPackageName, neatPackageName + ".ui.MainActivity"));
 
-                                context.startActivity(intent);
+                                activity.startActivity(intent);
+                                activity.overridePendingTransition(0, 0);
+
                                 return true;
                             }
                         });
