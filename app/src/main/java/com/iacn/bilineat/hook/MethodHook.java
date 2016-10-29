@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.View;
 
@@ -198,9 +199,6 @@ public class MethodHook {
                 "onCreate", Bundle.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        PreferenceScreen screen = (PreferenceScreen)
-                                callMethod(param.thisObject, "getPreferenceScreen");
-
                         final Activity activity = (Activity) callMethod(param.thisObject, "getActivity");
 
                         Preference preference = new Preference(activity);
@@ -221,7 +219,13 @@ public class MethodHook {
                             }
                         });
 
-                        screen.addPreference(preference);
+                        PreferenceScreen screen = (PreferenceScreen)
+                                callMethod(param.thisObject, "getPreferenceScreen");
+
+                        PreferenceCategory category = (PreferenceCategory)
+                                ((List) getObjectField(screen, "mPreferenceList")).get(1);
+
+                        category.addPreference(preference);
                     }
                 });
     }
