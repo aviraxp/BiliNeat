@@ -56,5 +56,21 @@ public class LayoutHook {
                 game.setVisibility(View.GONE);
             }
         });
+
+        // 添加 1080P 优先
+        if (xSharedPref.getBoolean("default_1080p", false)) {
+            res.setReplacement("tv.danmaku.bili", "array", "pref_player_mediaSource_entries", new String[]{
+                    "自动选择",
+                    "流畅优先",
+                    "高清优先",
+                    "超清优先",
+                    "1080P优先"});
+            res.setReplacement("tv.danmaku.bili", "array", "pref_player_mediaSource_entryValues", new String[]{
+                    "0",
+                    "100",
+                    "200",
+                    "400",
+                    "800"});
+        }
     }
 }

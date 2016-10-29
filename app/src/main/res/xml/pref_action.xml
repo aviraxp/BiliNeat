@@ -7,6 +7,12 @@
         android:summary="自动将网址转为可点击的链接"
         android:title="开启文字链接" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="default_1080p"
+        android:summary="开启默认清晰度1080P支持\n（这是一个未完成功能，待测试，可能有问题）"
+        android:title="1080P 支持" />
+
     <ListPreference
         android:dialogTitle="选择默认进入页面"
         android:entries="@array/default_page"
