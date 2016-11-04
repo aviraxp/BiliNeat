@@ -140,6 +140,8 @@ public class MethodHook {
      * 去除首页推广横幅广告
      */
     private void removePromoBanner(String className, String methodName) {
+        if (!xSharedPref.getBoolean("promo_banner", false)) return;
+
         findAndHookMethod(className, mClassLoader, methodName, List.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

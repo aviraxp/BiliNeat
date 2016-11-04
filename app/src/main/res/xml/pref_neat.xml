@@ -39,6 +39,12 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
+        android:key="promo_banner"
+        android:summary="去除首页横幅里的购物链接"
+        android:title="关闭推荐广告" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="drawer_my_vip"
         android:summary="去除侧滑菜单里的我的大会员"
         android:title="关闭我的大会员" />
