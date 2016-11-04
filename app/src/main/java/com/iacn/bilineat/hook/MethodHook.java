@@ -151,6 +151,7 @@ public class MethodHook {
                 Field weightField = clazz.getField("mWeight");
 
                 List<Object> newList = new ArrayList<>();
+                StringBuilder builder = new StringBuilder();
 
                 for (Object obj : list) {
                     int weight = weightField.getInt(obj);
@@ -166,6 +167,15 @@ public class MethodHook {
                     } else {
                         newList.add(obj);
                     }
+
+                    builder.append("----- BiliNeat Log  -----\n");
+                    builder.append("Weight = ");
+                    builder.append(weight);
+                    builder.append(", Value = ");
+                    builder.append(value);
+
+                    XposedBridge.log(builder.toString());
+                    builder.delete(0, builder.length());
                 }
 
                 param.args[0] = newList;
