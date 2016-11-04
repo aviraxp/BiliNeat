@@ -11,7 +11,9 @@ import android.view.View;
 
 import com.iacn.bilineat.BuildConfig;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -67,6 +69,7 @@ public class MethodHook {
                 hookResult("btg", "x", isDisMall);
 
                 hookTheme("cpv", "amr");
+                removePromoBanner("bl.alr$a", "a");
                 break;
 
             case "4.27.0":
@@ -129,6 +132,43 @@ public class MethodHook {
                         setIntField(theme, "mPrice", 0);
                     }
                 }
+            }
+        });
+    }
+
+    /**
+     * 去除首页推广横幅广告
+     */
+    private void removePromoBanner(String className, String methodName) {
+        findAndHookMethod(className, mClassLoader, methodName, List.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                // 原始横幅广告列表
+                List list = (List) param.args[0];
+
+                Class<?> clazz = findClass("com.bilibili.api.promo.BiliPromo$NewBanner", mClassLoader);
+                Field valueField = clazz.getField("mValue");
+                Field weightField = clazz.getField("mWeight");
+
+                List<Object> newList = new ArrayList<>();
+
+                for (Object obj : list) {
+                    int weight = weightField.getInt(obj);
+                    String value = (String) valueField.get(obj);
+
+                    if (weight == 3) {
+                        // 从以往经验来看，当 Weight == 3 时一般是链接推广
+                        // 不知为什么，哔哩哔哩把购物推广链接都用短网址转换过了
+                        // 这里就简单判断 dwz.cn 了（因为没别的好办法2333...）
+
+                        if (!value.contains("dwz.cn"))
+                            newList.add(obj);
+                    } else {
+                        newList.add(obj);
+                    }
+                }
+
+                param.args[0] = newList;
             }
         });
     }
