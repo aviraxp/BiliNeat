@@ -11,6 +11,7 @@ import android.preference.SwitchPreference;
 import android.widget.Toast;
 
 import com.iacn.bilineat.BuildConfig;
+import com.iacn.bilineat.Constant;
 import com.iacn.bilineat.R;
 import com.iacn.bilineat.ui.MainActivity;
 
@@ -21,11 +22,14 @@ import moe.feng.alipay.zerosdk.AlipayZeroSdk;
  * Emali iAcn0301@foxmail.com
  */
 
-public class AboutFragment extends BaseFragment {
+public class AboutFragment extends BaseFragment implements Preference.OnPreferenceClickListener {
 
     private PackageManager mManager;
     private ComponentName mComponentName;
     private SharedPreferences mSharedPref;
+
+    private Preference donate;
+    private Preference version;
 
     @Override
     protected int getXmlId() {
@@ -38,11 +42,14 @@ public class AboutFragment extends BaseFragment {
         mComponentName = new ComponentName(getActivity(), MainActivity.class.getName() + "-Alias");
         mSharedPref = getActivity().getSharedPreferences("setting", Context.MODE_WORLD_READABLE);
 
-        Preference donate = findPreference("donate");
-        findPreference("version").setSummary(BuildConfig.VERSION_NAME);
+        donate = findPreference("donate");
+        version = findPreference("version");
         SwitchPreference hideLauncher = (SwitchPreference) findPreference("hide_launcher");
 
         hideLauncher.setPersistent(false);
+        donate.setOnPreferenceClickListener(this);
+        version.setOnPreferenceClickListener(this);
+
         hideLauncher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -60,27 +67,48 @@ public class AboutFragment extends BaseFragment {
             }
         });
 
-        donate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                if (AlipayZeroSdk.hasInstalledAlipayClient(getActivity())) {
-                    AlipayZeroSdk.startAlipayClient(getActivity(), "aex03925j2gcc9fv5imib0c");
-                } else {
-                    copyToClipboard("895081850@qq.com");
-                    Toast.makeText(getActivity(),
-                            "未安装支付宝客户端\n已将支付宝ID复制到剪贴板", Toast.LENGTH_SHORT).show();
-                }
-
-                return true;
-            }
-        });
-
         boolean isHide = mManager.getComponentEnabledSetting(mComponentName) ==
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 
         boolean executed = mSharedPref.getBoolean("change_method_executed", false);
 
         hideLauncher.setChecked(!executed || isHide);
+        version.setSummary(BuildConfig.VERSION_NAME);
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference == version) {
+            String[] supportVersions = Constant.supportVersions;
+            StringBuilder builder = new StringBuilder();
+            builder.append("支持哔哩哔哩版本:\n");
+
+            for (int i = 0; i < supportVersions.length; i++) {
+                builder.append(supportVersions[i]);
+
+                if (i < supportVersions.length - 1) {
+                    builder.append(", ");
+                }
+            }
+
+            Toast.makeText(getActivity(), builder.toString(), Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (preference == donate) {
+            openAliPay();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void openAliPay() {
+        if (AlipayZeroSdk.hasInstalledAlipayClient(getActivity())) {
+            AlipayZeroSdk.startAlipayClient(getActivity(), "aex03925j2gcc9fv5imib0c");
+        } else {
+            copyToClipboard("895081850@qq.com");
+            Toast.makeText(getActivity(),
+                    "未安装支付宝客户端\n已将支付宝ID复制到剪贴板", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void copyToClipboard(String str) {

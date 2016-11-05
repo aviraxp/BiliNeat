@@ -29,8 +29,6 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
 
     public static XSharedPreferences xSharedPref;
-    private static final String[] mSupportVersions = {"4.27.0", "4.28.1"};
-
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -49,7 +47,7 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
                 .getPackageInfo("tv.danmaku.bili", PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).versionName;
 
         // 判断插件是否支持当前哔哩哔哩版本
-        for (String version : mSupportVersions) {
+        for (String version : Constant.supportVersions) {
             if (version.equals(currentVersion)) {
                 xSharedPref.reload();
                 new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
