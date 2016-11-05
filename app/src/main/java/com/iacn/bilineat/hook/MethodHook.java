@@ -159,13 +159,15 @@ public class MethodHook {
                     int weight = weightField.getInt(obj);
                     String value = (String) valueField.get(obj);
 
-                    if (weight == 3) {
-                        // 从以往经验来看，当 Weight == 3 时一般是链接推广
-                        // 不知为什么，哔哩哔哩把购物推广链接都用短网址转换过了
-                        // 这里就简单判断 dwz.cn 了（因为没别的好办法2333...）
+                    if (weight == 2 || weight == 3) {
+                        // 从以往经验来看，当 Weight == 2 或 3 时一般是链接推广
+                        // 这里就简单判断广告网址了（因为没别的好办法2333...）
 
-                        if (!value.contains("dwz.cn"))
+                        if (value.contains("dwz.cn") || value.contains("adfarm.mediaplex.com")) {
+                            continue;
+                        } else {
                             newList.add(obj);
+                        }
                     } else {
                         newList.add(obj);
                     }
