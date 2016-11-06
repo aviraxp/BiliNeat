@@ -159,11 +159,11 @@ public class MethodHook {
                     int weight = weightField.getInt(obj);
                     String value = (String) valueField.get(obj);
 
-                    if (weight == 2 || weight == 3) {
-                        // 从以往经验来看，当 Weight == 2 或 3 时一般是链接推广
+                    if (weight == 2 || weight == 3 || weight == 7) {
+                        // 从以往经验来看，当 Weight == 2 或 3 或 7 时一般是链接推广
                         // 这里就简单判断广告网址了（因为没别的好办法2333...）
 
-                        if (value.contains("dwz.cn") || value.contains("adfarm.mediaplex.com")) {
+                        if (value.contains("dwz.cn") || value.contains("adfarm.mediaplex.com") || value.contains("mmstat.com")) {
                             continue;
                         } else {
                             newList.add(obj);
