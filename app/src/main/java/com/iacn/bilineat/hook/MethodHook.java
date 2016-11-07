@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.view.Menu;
 import android.view.View;
 
 import com.iacn.bilineat.BuildConfig;
@@ -24,6 +25,7 @@ import static com.iacn.bilineat.XposedInit.xSharedPref;
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
+import static de.robv.android.xposed.XposedHelpers.findFirstFieldByExactType;
 import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 import static de.robv.android.xposed.XposedHelpers.setBooleanField;
@@ -68,6 +70,7 @@ public class MethodHook {
                 hookResult("btg", "s", isDisMyVip);
                 hookResult("btg", "x", isDisMall);
 
+                removeVipPoint();
                 hookTheme("cpu", "ams");
                 removePromoBanner("bl.als$a", "a");
                 break;
@@ -124,6 +127,24 @@ public class MethodHook {
      */
     private void hookResult(String className, String methodName, Class<?> returnType, boolean state) {
         hookMethodByReturnType("bl." + className, methodName, returnType, state);
+    }
+
+    /**
+     * 去除侧边栏会员积分
+     */
+    private void removeVipPoint() {
+        findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
+                View.class, Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        Class clazz = findClass("android.support.design.widget.NavigationView", mClassLoader);
+                        Field field = findFirstFieldByExactType(param.thisObject.getClass(), clazz);
+
+                        Menu menu = (Menu) callMethod(field.get(param.thisObject), "getMenu");
+                        // 取得第三个 Menu，即为 会员积分
+                        menu.getItem(2).setVisible(false);
+                    }
+                });
     }
 
     /**
