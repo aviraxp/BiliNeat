@@ -133,6 +133,8 @@ public class MethodHook {
      * 去除侧边栏会员积分
      */
     private void removeVipPoint() {
+        if (!xSharedPref.getBoolean("drawer_vip_point", false)) return;
+
         findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
                 View.class, Bundle.class, new XC_MethodHook() {
                     @Override

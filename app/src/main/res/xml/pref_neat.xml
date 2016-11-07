@@ -45,6 +45,12 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
+        android:key="drawer_vip_point"
+        android:summary="去除侧滑菜单里的会员积分"
+        android:title="关闭会员积分" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="drawer_my_vip"
         android:summary="去除侧滑菜单里的我的大会员"
         android:title="关闭我的大会员" />
