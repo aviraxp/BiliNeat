@@ -6,5 +6,5 @@ package com.iacn.bilineat;
  */
 
 public class Constant {
-    public static final String[] supportVersions = {"4.27.0", "4.28.1"};
+    public static final String[] supportVersions = {"4.27.0", "4.28.1", "4.28.3"};
 }
