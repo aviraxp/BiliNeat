@@ -60,6 +60,21 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "4.29.0":
+                hookResult("bua", "f", boolean.class, isShowCategory);
+                hookResult("bua", "g", boolean.class, isShowToolBar);
+                hookResult("bua", "h", boolean.class, isShowDraw);
+                hookResult("bua", "i", boolean.class, isShowFound);
+                hookResult("bua", "j", false);
+
+                hookResult("bua", "s", isDisMyVip);
+                hookResult("bua", "x", isDisMall);
+
+                removeVipPoint();
+                hookTheme("csl", "amv");
+                removePromoBanner("bl.alv$a", "a");
+                break;
+
             case "4.28.3":
                 hookResult("btg", "f", boolean.class, isShowCategory);
                 hookResult("btg", "g", boolean.class, isShowToolBar);
