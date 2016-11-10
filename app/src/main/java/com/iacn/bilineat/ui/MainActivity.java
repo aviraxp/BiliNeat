@@ -38,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mBottomBar = (BottomNavigationView) findViewById(R.id.bottom_bar);
 
-        ActionBar actionBar = getSupportActionBar();
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
