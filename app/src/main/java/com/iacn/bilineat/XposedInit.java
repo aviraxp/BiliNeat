@@ -38,13 +38,13 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
-        if (!"tv.danmaku.bili".equals(loadPackageParam.packageName)) return;
+        if (!Constant.biliPackageName.equals(loadPackageParam.packageName)) return;
 
         Object activityThread = callStaticMethod(findClass("android.app.ActivityThread", null), "currentActivityThread");
         Context context = (Context) callMethod(activityThread, "getSystemContext");
 
         String currentVersion = context.getPackageManager()
-                .getPackageInfo("tv.danmaku.bili", PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).versionName;
+                .getPackageInfo(Constant.biliPackageName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).versionName;
 
         // 判断插件是否支持当前哔哩哔哩版本
         for (String version : Constant.supportVersions) {
@@ -67,7 +67,7 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
     @Override
     public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resParam) throws Throwable {
-        if (!"tv.danmaku.bili".equals(resParam.packageName)) return;
+        if (!Constant.biliPackageName.equals(resParam.packageName)) return;
 
         xSharedPref.reload();
         new LayoutHook().doHook(resParam.res);
