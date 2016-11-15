@@ -90,21 +90,6 @@ public class MethodHook {
                 removePromoBanner("bl.alv$a", "a");
                 break;
 
-            case "4.28.3":
-                hookResult("btg", "f", boolean.class, isShowCategory);
-                hookResult("btg", "g", boolean.class, isShowToolBar);
-                hookResult("btg", "h", boolean.class, isShowDraw);
-                hookResult("btg", "i", boolean.class, isShowFound);
-                hookResult("btg", "j", false);
-
-                hookResult("btg", "s", isDisMyVip);
-                hookResult("btg", "x", isDisMall);
-
-                removeVipPoint();
-                hookTheme("cpu", "ams");
-                removePromoBanner("bl.als$a", "a");
-                break;
-
             case "4.27.0":
                 hookResult("cdj", "f", boolean.class, isShowCategory);
                 hookResult("cdj", "g", boolean.class, isShowToolBar);
