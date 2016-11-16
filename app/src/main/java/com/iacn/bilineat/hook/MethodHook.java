@@ -60,7 +60,7 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
-            case "4.29.2":
+            case "4.29.2-alpha":
                 hookResult("bts", "f", boolean.class, isShowCategory);
                 hookResult("bts", "g", boolean.class, isShowToolBar);
                 hookResult("bts", "h", boolean.class, isShowDraw);

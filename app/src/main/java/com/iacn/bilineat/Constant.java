@@ -6,6 +6,6 @@ package com.iacn.bilineat;
  */
 
 public class Constant {
-    public static final String[] supportVersions = {"4.27.0", "4.29.0", "4.29.1", "4.29.2"};
+    public static final String[] supportVersions = {"4.27.0", "4.29.0", "4.29.1", "4.29.2-alpha"};
     public static final String biliPackageName = "tv.danmaku.bili";
 }
