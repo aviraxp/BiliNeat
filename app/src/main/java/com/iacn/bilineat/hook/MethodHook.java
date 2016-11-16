@@ -72,7 +72,7 @@ public class MethodHook {
 
                 removeVipPoint();
                 hookTheme("cxm", "amv");
-                removePromoBanner("bl.alv$a", "a");
+                removePromoBanner("bl.alv$a");
                 break;
 
             case "4.29.1":
@@ -87,7 +87,7 @@ public class MethodHook {
 
                 removeVipPoint();
                 hookTheme("csj", "amv");
-                removePromoBanner("bl.alv$a", "a");
+                removePromoBanner("bl.alv$a");
                 break;
 
             case "4.29.0":
@@ -102,7 +102,7 @@ public class MethodHook {
 
                 removeVipPoint();
                 hookTheme("csl", "amv");
-                removePromoBanner("bl.alv$a", "a");
+                removePromoBanner("bl.alv$a");
                 break;
 
             case "4.27.0":
@@ -192,10 +192,10 @@ public class MethodHook {
     /**
      * 去除首页推广横幅广告
      */
-    private void removePromoBanner(String className, String methodName) {
+    private void removePromoBanner(String className) {
         if (!xSharedPref.getBoolean("promo_banner", false)) return;
 
-        findAndHookMethod(className, mClassLoader, methodName, List.class, new XC_MethodHook() {
+        findAndHookMethod(className, mClassLoader, "a", List.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 // 原始横幅广告列表
