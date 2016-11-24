@@ -60,19 +60,19 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
-            case "4.29.2-alpha":
-                hookResult("bts", "f", boolean.class, isShowCategory);
-                hookResult("bts", "g", boolean.class, isShowToolBar);
-                hookResult("bts", "h", boolean.class, isShowDraw);
-                hookResult("bts", "i", boolean.class, isShowFound);
-                hookResult("bts", "j", false);
+            case "4.30.0":
+                hookResult("bub", "f", boolean.class, isShowCategory);
+                hookResult("bub", "g", boolean.class, isShowToolBar);
+                hookResult("bub", "h", boolean.class, isShowDraw);
+                hookResult("bub", "i", boolean.class, isShowFound);
+                hookResult("bub", "j", boolean.class, false);
 
-                hookResult("bts", "s", isDisMyVip);
-                hookResult("bts", "x", isDisMall);
+                hookResult("bub", "s", isDisMyVip);
+                hookResult("bub", "x", isDisMall);
 
                 removeVipPoint();
-                hookTheme("cxm", "amv");
-                removePromoBanner("bl.alv$a");
+                hookTheme("cxy", "amu");
+                removePromoBanner("bl.alu$a");
                 break;
 
             case "4.29.1":
@@ -87,21 +87,6 @@ public class MethodHook {
 
                 removeVipPoint();
                 hookTheme("csj", "amv");
-                removePromoBanner("bl.alv$a");
-                break;
-
-            case "4.29.0":
-                hookResult("bua", "f", boolean.class, isShowCategory);
-                hookResult("bua", "g", boolean.class, isShowToolBar);
-                hookResult("bua", "h", boolean.class, isShowDraw);
-                hookResult("bua", "i", boolean.class, isShowFound);
-                hookResult("bua", "j", false);
-
-                hookResult("bua", "s", isDisMyVip);
-                hookResult("bua", "x", isDisMall);
-
-                removeVipPoint();
-                hookTheme("csl", "amv");
                 removePromoBanner("bl.alv$a");
                 break;
 
