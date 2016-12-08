@@ -15,7 +15,6 @@ import com.iacn.bilineat.Constant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -68,7 +67,6 @@ public class MethodHook {
 
                 hookTheme("dio", "art");
                 removeFoundMall("bl.ctl");
-                removePromoBanner("bl.aqs$a");
                 break;
         }
 
@@ -119,57 +117,6 @@ public class MethodHook {
                         setIntField(theme, "mPrice", 0);
                     }
                 }
-            }
-        });
-    }
-
-    /**
-     * 去除首页推广横幅广告
-     */
-    private void removePromoBanner(String className) {
-        if (!xSharedPref.getBoolean("promo_banner", false)) return;
-
-        findAndHookMethod(className, mClassLoader, "a", List.class, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                // 原始横幅广告列表
-                List list = (List) param.args[0];
-
-                Class<?> clazz = findClass("com.bilibili.api.promo.BiliPromo$NewBanner", mClassLoader);
-                Field valueField = clazz.getField("mValue");
-                Field weightField = clazz.getField("mWeight");
-
-                List<Object> newList = new ArrayList<>();
-                StringBuilder builder = new StringBuilder();
-
-                for (Object obj : list) {
-                    int weight = weightField.getInt(obj);
-                    String value = (String) valueField.get(obj);
-
-                    if (weight == 2 || weight == 3 || weight == 7) {
-                        // 从以往经验来看，当 Weight == 2 或 3 或 7 时一般是链接推广
-                        // 这里就简单判断广告网址了（因为没别的好办法2333...）
-
-                        if (value.contains("dwz.cn") || value.contains("adfarm.mediaplex.com") || value.contains("mmstat.com")) {
-                            continue;
-                        } else {
-                            newList.add(obj);
-                        }
-                    } else {
-                        newList.add(obj);
-                    }
-
-                    builder.append("----- BiliNeat Log  -----\n");
-                    builder.append("Weight = ");
-                    builder.append(weight);
-                    builder.append(", Value = ");
-                    builder.append(value);
-
-                    XposedBridge.log(builder.toString());
-                    builder.delete(0, builder.length());
-                }
-
-                param.args[0] = newList;
             }
         });
     }
