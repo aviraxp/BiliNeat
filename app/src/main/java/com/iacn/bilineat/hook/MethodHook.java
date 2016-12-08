@@ -135,6 +135,11 @@ public class MethodHook {
         final boolean myVip = !xSharedPref.getBoolean("drawer_my_vip", false);
         final boolean vipPoint = !xSharedPref.getBoolean("drawer_vip_point", false);
 
+        // Q：为什么要使用这种方式来判断？
+        // A：因为 Hook 是一项很占资源的操作，这里为了节省资源
+        //    只在两个选项中有某个开启时才进行挂钩，而不是每次根据 Value 值去设置
+        //    其他地方同理
+
         if (myVip && vipPoint) return;
 
         findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
