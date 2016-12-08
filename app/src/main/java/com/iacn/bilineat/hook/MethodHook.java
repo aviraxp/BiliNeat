@@ -67,7 +67,8 @@ public class MethodHook {
                 hookResult("cel", "i", boolean.class, isShowFound);
                 hookResult("cel", "j", boolean.class, false);
 
-                removeVipPoint();
+//                removeVipPoint();
+                removeDrawerVip();
                 hookTheme("dio", "art");
                 removePromoBanner("bl.aqs$a");
                 break;
@@ -82,7 +83,7 @@ public class MethodHook {
                 hookResult("bub", "s", isDisMyVip);
                 hookResult("bub", "x", isDisMall);
 
-                removeVipPoint();
+//                removeVipPoint();
                 hookTheme("cxy", "amu");
                 removePromoBanner("bl.alu$a");
                 break;
@@ -128,10 +129,13 @@ public class MethodHook {
     }
 
     /**
-     * 去除侧边栏会员积分
+     * 去除侧边栏我的大会员
      */
-    private void removeVipPoint() {
-        if (!xSharedPref.getBoolean("drawer_vip_point", false)) return;
+    private void removeDrawerVip() {
+        final boolean myVip = !xSharedPref.getBoolean("drawer_my_vip", false);
+        final boolean vipPoint = !xSharedPref.getBoolean("drawer_vip_point", false);
+
+        if (myVip && vipPoint) return;
 
         findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
                 View.class, Bundle.class, new XC_MethodHook() {
@@ -141,8 +145,12 @@ public class MethodHook {
                         Field field = findFirstFieldByExactType(param.thisObject.getClass(), clazz);
 
                         Menu menu = (Menu) callMethod(field.get(param.thisObject), "getMenu");
-                        // 取得第三个 Menu，即为 会员积分
-                        menu.getItem(2).setVisible(false);
+
+                        // 取得第二个 Menu，为 我的大会员
+                        menu.getItem(1).setVisible(myVip);
+
+                        // 取得第三个 Menu，为 会员积分
+                        menu.getItem(2).setVisible(vipPoint);
                     }
                 });
     }
