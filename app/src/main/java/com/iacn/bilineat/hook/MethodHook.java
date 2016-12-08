@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 
 import com.iacn.bilineat.BuildConfig;
+import com.iacn.bilineat.Constant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -65,12 +66,13 @@ public class MethodHook {
                 hookResult("cel", "i", boolean.class, isShowFound);
                 hookResult("cel", "j", boolean.class, false);
 
-                removeDrawerVip();
                 hookTheme("dio", "art");
+                removeFoundMall("bl.ctl");
                 removePromoBanner("bl.aqs$a");
                 break;
         }
 
+        removeDrawerVip();
         hookThemeDialog();
         hookBangumi();
         hookMovie();
@@ -95,38 +97,6 @@ public class MethodHook {
      */
     private void hookResult(String className, String methodName, Class<?> returnType, boolean state) {
         hookMethodByReturnType("bl." + className, methodName, returnType, state);
-    }
-
-    /**
-     * 去除侧边栏我的大会员
-     */
-    private void removeDrawerVip() {
-        final boolean myVip = !xSharedPref.getBoolean("drawer_my_vip", false);
-        final boolean vipPoint = !xSharedPref.getBoolean("drawer_vip_point", false);
-
-        // Q：为什么要使用这种方式来判断？
-        // A：因为 Hook 是一项很占资源的操作，这里为了节省资源
-        //    只在两个选项中有某个开启时才进行挂钩，而不是每次根据 Value 值去设置
-        //    其他地方同理
-
-        if (myVip && vipPoint) return;
-
-        findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
-                View.class, Bundle.class, new XC_MethodHook() {
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        Class clazz = findClass("android.support.design.widget.NavigationView", mClassLoader);
-                        Field field = findFirstFieldByExactType(param.thisObject.getClass(), clazz);
-
-                        Menu menu = (Menu) callMethod(field.get(param.thisObject), "getMenu");
-
-                        // 取得第二个 Menu，为 我的大会员
-                        menu.getItem(1).setVisible(myVip);
-
-                        // 取得第三个 Menu，为 会员积分
-                        menu.getItem(2).setVisible(vipPoint);
-                    }
-                });
     }
 
     /**
@@ -202,6 +172,60 @@ public class MethodHook {
                 param.args[0] = newList;
             }
         });
+    }
+
+    /**
+     * 去除发现里的周边商城
+     */
+    private void removeFoundMall(String className) {
+        if (!xSharedPref.getBoolean("found_mall", false)) return;
+
+        findAndHookMethod(className, mClassLoader, "onViewCreated", View.class,
+                Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        View view = (View) param.args[0];
+
+                        int id = view.getContext().getResources()
+                                .getIdentifier("bmall", "id", Constant.biliPackageName);
+
+                        if (id != 0) {
+                            view.findViewById(id).setVisibility(View.GONE);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 去除侧边栏我的大会员
+     */
+    private void removeDrawerVip() {
+        final boolean myVip = !xSharedPref.getBoolean("drawer_my_vip", false);
+        final boolean vipPoint = !xSharedPref.getBoolean("drawer_vip_point", false);
+
+        // Q：为什么要使用这种方式来判断？
+        // A：因为 Hook 是一项很占资源的操作，这里为了节省资源
+        //    只在两个选项中有某个开启时才进行挂钩，而不是每次根据 Value 值去设置
+        //    其他地方同理
+
+        if (myVip && vipPoint) return;
+
+        findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
+                View.class, Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        Class clazz = findClass("android.support.design.widget.NavigationView", mClassLoader);
+                        Field field = findFirstFieldByExactType(param.thisObject.getClass(), clazz);
+
+                        Menu menu = (Menu) callMethod(field.get(param.thisObject), "getMenu");
+
+                        // 取得第二个 Menu，为 我的大会员
+                        menu.getItem(1).setVisible(myVip);
+
+                        // 取得第三个 Menu，为 会员积分
+                        menu.getItem(2).setVisible(vipPoint);
+                    }
+                });
     }
 
     /**
