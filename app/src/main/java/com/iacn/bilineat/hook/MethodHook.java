@@ -53,8 +53,6 @@ public class MethodHook {
         boolean isShowFound = !xSharedPref.getBoolean("found_game", true);
         boolean isShowToolBar = !xSharedPref.getBoolean("toolbar_game", true);
         boolean isShowDraw = !xSharedPref.getBoolean("drawer_promote", true);
-        boolean isDisMyVip = !xSharedPref.getBoolean("drawer_my_vip", false);
-        boolean isDisMall = !xSharedPref.getBoolean("found_mall", false);
 
         int homeIndex = Integer.parseInt(xSharedPref.getString("default_page", "1"));
 
@@ -67,38 +65,9 @@ public class MethodHook {
                 hookResult("cel", "i", boolean.class, isShowFound);
                 hookResult("cel", "j", boolean.class, false);
 
-//                removeVipPoint();
                 removeDrawerVip();
                 hookTheme("dio", "art");
                 removePromoBanner("bl.aqs$a");
-                break;
-
-            case "4.30.0":
-                hookResult("bub", "f", boolean.class, isShowCategory);
-                hookResult("bub", "g", boolean.class, isShowToolBar);
-                hookResult("bub", "h", boolean.class, isShowDraw);
-                hookResult("bub", "i", boolean.class, isShowFound);
-                hookResult("bub", "j", boolean.class, false);
-
-                hookResult("bub", "s", isDisMyVip);
-                hookResult("bub", "x", isDisMall);
-
-//                removeVipPoint();
-                hookTheme("cxy", "amu");
-                removePromoBanner("bl.alu$a");
-                break;
-
-            case "4.27.0":
-                hookResult("cdj", "f", boolean.class, isShowCategory);
-                hookResult("cdj", "g", boolean.class, isShowToolBar);
-                hookResult("cdj", "h", boolean.class, isShowDraw);
-                hookResult("cdj", "i", boolean.class, isShowFound);
-                hookResult("cdj", "j", false);
-
-                hookResult("cdj", "s", isDisMyVip);
-                hookResult("cdj", "x", isDisMall);
-
-                hookTheme("ffi", "bco");
                 break;
         }
 
