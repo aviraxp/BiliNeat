@@ -58,6 +58,17 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "4.31.1":
+                hookResult("cem", "f", boolean.class, isShowCategory);
+                hookResult("cem", "g", boolean.class, isShowToolBar);
+                hookResult("cem", "h", boolean.class, isShowDraw);
+                hookResult("cem", "i", boolean.class, isShowFound);
+                hookResult("cem", "j", boolean.class, false);
+
+                hookTheme("dip", "aru");
+                removeFoundMall("ctm");
+                break;
+
             case "4.31.0":
                 hookResult("cel", "f", boolean.class, isShowCategory);
                 hookResult("cel", "g", boolean.class, isShowToolBar);
@@ -66,7 +77,7 @@ public class MethodHook {
                 hookResult("cel", "j", boolean.class, false);
 
                 hookTheme("dio", "art");
-                removeFoundMall("bl.ctl");
+                removeFoundMall("ctl");
                 break;
         }
 
@@ -127,7 +138,7 @@ public class MethodHook {
     private void removeFoundMall(String className) {
         if (!xSharedPref.getBoolean("found_mall", false)) return;
 
-        findAndHookMethod(className, mClassLoader, "onViewCreated", View.class,
+        findAndHookMethod("bl." + className, mClassLoader, "onViewCreated", View.class,
                 Bundle.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
