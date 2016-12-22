@@ -58,6 +58,17 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "4.32.0":
+                hookResult("ceu", "f", boolean.class, isShowCategory);
+                hookResult("ceu", "g", boolean.class, isShowToolBar);
+                hookResult("ceu", "h", boolean.class, isShowDraw);
+                hookResult("ceu", "i", boolean.class, isShowFound);
+                hookResult("ceu", "j", boolean.class, false);
+
+                hookTheme("dlz", "asa");
+                removeFoundMall("cvt");
+                break;
+
             case "4.31.1":
                 hookResult("cem", "f", boolean.class, isShowCategory);
                 hookResult("cem", "g", boolean.class, isShowToolBar);
