@@ -2,6 +2,7 @@ package com.iacn.bilineat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -37,20 +38,33 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
     }
 
     @Override
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
+    public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         if (!Constant.biliPackageName.equals(loadPackageParam.packageName)) return;
 
         Object activityThread = callStaticMethod(findClass("android.app.ActivityThread", null), "currentActivityThread");
         Context context = (Context) callMethod(activityThread, "getSystemContext");
 
-        String currentVersion = context.getPackageManager()
+        final String currentVersion = context.getPackageManager()
                 .getPackageInfo(Constant.biliPackageName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).versionName;
 
         // 判断插件是否支持当前哔哩哔哩版本
         for (String version : Constant.supportVersions) {
             if (version.equals(currentVersion)) {
                 xSharedPref.reload();
-                new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
+
+                // Lollipop 以下在 Application 初始化完成后再进行 Hook
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    findAndHookMethod("tv.danmaku.bili.MainApplication", loadPackageParam.classLoader,
+                            "onCreate", new XC_MethodHook() {
+                                @Override
+                                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                                    new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
+                                }
+                            });
+                } else {
+                    new MethodHook().doHook(loadPackageParam.classLoader, currentVersion);
+                }
+
                 return;
             }
         }
