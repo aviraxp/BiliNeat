@@ -21,7 +21,7 @@ android {
 
 dependencies {
     provided files('libs/XposedBridgeApi-54.jar')
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support:support-v13:25.0.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:support-v13:25.1.0'
     compile 'moe.feng:AlipayZeroSdk:1.1'
 }
