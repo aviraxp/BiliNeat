@@ -1,4 +1,4 @@
-package com.iacn.bilineat.ui;
+package com.iacn.bilineat.ui.fragment;
 
 import com.iacn.bilineat.R;
 
