@@ -1,4 +1,4 @@
-package com.iacn.bilineat.ui;
+package com.iacn.bilineat.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,9 +10,9 @@ import android.view.WindowManager;
 /**
  * 状态栏工具类
  * <p/>
- * Modify from 2016.5.6 By Leon
+ * Modify from 2016.5.6 By iAcn
  */
-class StatusBarUtils {
+public class StatusBarUtils {
     /**
      * 设置状态栏颜色
      * <p/>
@@ -23,7 +23,7 @@ class StatusBarUtils {
      * @param activity 需要设置的Activity
      * @param color    状态栏颜色值
      */
-    static void setColor(Activity activity, int color) {
+    public static void setColor(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 创建一个和状态栏一样大小的View
             View statusBarView = createStatusView(activity, color);

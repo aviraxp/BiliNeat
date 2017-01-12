@@ -19,6 +19,7 @@ import com.iacn.bilineat.R;
 import com.iacn.bilineat.ui.fragment.AboutFragment;
 import com.iacn.bilineat.ui.fragment.ActionFragment;
 import com.iacn.bilineat.ui.fragment.NeatFragment;
+import com.iacn.bilineat.util.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
