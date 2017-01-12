@@ -3,11 +3,13 @@ package com.iacn.bilineat.hook;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.iacn.bilineat.BuildConfig;
@@ -111,6 +113,23 @@ public class MethodHook {
                         menu.add("保存封面图");
                     }
                 });
+
+        findAndHookMethod(videoClass, "onOptionsItemSelected", MenuItem.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                MenuItem item = (MenuItem) param.args[0];
+
+                if (item.getItemId() == 0) {
+                    // 这是一个自定义选项
+                    Object obj = getObjectField(param.thisObject, "mCover");
+                    Drawable drawable = (Drawable) callMethod(obj, "getDrawable");
+
+                    if (drawable != null) {
+                        saveDrawableToLocal(drawable);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -303,5 +322,9 @@ public class MethodHook {
                         category.addPreference(preference);
                     }
                 });
+    }
+
+    private void saveDrawableToLocal(Drawable drawable){
+
     }
 }
