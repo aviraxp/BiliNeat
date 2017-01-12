@@ -323,8 +323,4 @@ public class MethodHook {
                     }
                 });
     }
-
-    private void saveDrawableToLocal(Drawable drawable){
-
-    }
 }
