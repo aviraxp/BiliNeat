@@ -18,6 +18,32 @@ import java.io.IOException;
 
 public class ImgUtils {
 
+    public static void saveDrawableToLocal(Drawable drawable){
+        Bitmap bitmap = drawableToBitmap(drawable);
+        FileOutputStream fos = null;
+
+        try {
+            File file = new File(Environment.DIRECTORY_PICTURES + "BiliNeat/aaa.jpg");
+            fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (fos != null) {
+                    // 因为 Bitmap.compress 方法是异步保存
+                    // 所以这里使用 flush 手动刷写一下
+                    fos.flush();
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private static Bitmap drawableToBitmap(Drawable drawable) {
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
@@ -34,6 +60,5 @@ public class ImgUtils {
         drawable.draw(canvas);
 
         return bitmap;
-
     }
 }
