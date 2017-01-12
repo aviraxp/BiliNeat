@@ -96,8 +96,21 @@ public class MethodHook {
         hookThemeDialog();
         hookBangumi();
         hookMovie();
+        hookCover();
         hookPage(homeIndex);
         addNeatEntrance();
+    }
+
+    private void hookCover() {
+        Class<?> videoClass = findClass("tv.danmaku.bili.ui.video.BaseVideoDetailsActivity", mClassLoader);
+
+        findAndHookMethod(videoClass, "onCreateOptionsMenu", Menu.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        Menu menu = (Menu) param.args[0];
+                        menu.add("保存封面图");
+                    }
+                });
     }
 
     /**
