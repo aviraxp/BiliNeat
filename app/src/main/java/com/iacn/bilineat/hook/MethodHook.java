@@ -79,17 +79,6 @@ public class MethodHook {
                 hookTheme("dlz", "asa");
                 removeFoundMall("cvt");
                 break;
-
-            case "4.31.1":
-                hookResult("cem", "f", boolean.class, isShowCategory);
-                hookResult("cem", "g", boolean.class, isShowToolBar);
-                hookResult("cem", "h", boolean.class, isShowDraw);
-                hookResult("cem", "i", boolean.class, isShowFound);
-                hookResult("cem", "j", boolean.class, false);
-
-                hookTheme("dip", "aru");
-                removeFoundMall("ctm");
-                break;
         }
 
         removeDrawerVip();
