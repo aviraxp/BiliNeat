@@ -213,6 +213,17 @@ public class MethodHook {
                 setBooleanField(param.thisObject, "mDownloadable", true);
             }
         });
+
+        findAndHookMethod("tv.danmaku.bili.ui.bangumi.BangumiDetailActivity", mClassLoader, "p", new XC_MethodHook() {
+
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                Class<?> seasonDetailClass = findClass("com.bilibili.api.bangumi.BiliBangumiSeasonDetail", mClassLoader);
+
+                Field field = findFirstFieldByExactType(param.thisObject.getClass(), seasonDetailClass);
+                setBooleanField(field.get(param.thisObject), "mDownloadable", true);
+            }
+        });
     }
 
     /**
@@ -249,6 +260,7 @@ public class MethodHook {
     private void addNeatEntrance() {
         findAndHookMethod("tv.danmaku.bili.preferences.BiliPreferencesActivity$a", mClassLoader,
                 "onCreate", Bundle.class, new XC_MethodHook() {
+
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         final Activity activity = (Activity) callMethod(param.thisObject, "getActivity");
