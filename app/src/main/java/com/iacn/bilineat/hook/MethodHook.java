@@ -58,24 +58,23 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
-            case "4.33.3":
-                hookResult("cez", "e", boolean.class, isShowCategory);
-                hookResult("cez", "f", boolean.class, isShowToolBar);
-                hookResult("cez", "g", boolean.class, isShowDraw);
-                hookResult("cez", "h", boolean.class, isShowFound);
-                hookResult("cez", "i", boolean.class, false);
-
-                hookTheme("dmv", "ase");
-                removeFoundMall("cwa");
+            case "4.34.0":
+                hookResult("dfr", "e", boolean.class, isShowCategory);
+                hookResult("dfr", "f", boolean.class, isShowToolBar);
+                hookResult("dfr", "g", boolean.class, isShowDraw);
+                hookResult("dfr", "h", boolean.class, isShowFound);
+                hookResult("dfr", "i", boolean.class, false);
+                hookTheme("enb", "arq");
+                removeFoundMall("dwh");
                 break;
 
+            case "4.33.3":
             case "4.33.0":
                 hookResult("cez", "e", boolean.class, isShowCategory);
                 hookResult("cez", "f", boolean.class, isShowToolBar);
                 hookResult("cez", "g", boolean.class, isShowDraw);
                 hookResult("cez", "h", boolean.class, isShowFound);
                 hookResult("cez", "i", boolean.class, false);
-
                 hookTheme("dmv", "ase");
                 removeFoundMall("cwa");
                 break;
