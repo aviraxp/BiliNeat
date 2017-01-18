@@ -3,13 +3,15 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         applicationId "com.iacn.bilineat"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 39
-        versionName "1.6.7"
+        versionCode 40
+        versionName "1.6.9"
     }
+
     buildTypes {
         release {
             minifyEnabled true
