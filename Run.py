@@ -1,3 +1,7 @@
+import os
+import re
+
+
 class HookParam(object):
     online_helper_class = 'NotFound'
     category_method = 'NotFound'
@@ -61,12 +65,16 @@ def find_online_helper(file, param):
     for line in file:
         if 'hide_gamecenter_in_category_channels' in line:
             param.category_method = get_online_method(line, content, regex)
+
         elif 'hide_gamecenter_in_toolbar_channels' in line:
             param.toolbar_method = get_online_method(line, content, regex)
+
         elif 'hide_app_recommend_in_drawer_channels' in line:
             param.drawer_method = get_online_method(line, content, regex)
+
         elif 'hide_gamecenter_in_discover_channels' in line:
             param.found_method = get_online_method(line, content, regex)
+
         elif 'hide_gamecenter_in_game_tid_channels' in line:
             param.game_center_method = get_online_method(line, content, regex)
 
