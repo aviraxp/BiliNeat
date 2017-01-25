@@ -17,7 +17,7 @@ def print_tips(text):
 
 
 def enter_bl_folder():
-    print_tips('切换到工作目录')
+    print_tips('Enter Working Directory')
     os.chdir('bl')
     print(os.getcwd())
 
@@ -36,8 +36,27 @@ def print_result(param):
     print('BMallClass      = ' + param.bmall_class)
 
 
+def find_key_text(name, param):
+    pass
+
+
+def find_files():
+    print_tips('Finding...')
+    param = HookParam()
+    walk_dir = os.walk(os.curdir)
+    exit()
+
+    for root, dirs, files in walk_dir:
+        for name in files:
+            find_key_text(name, param)
+
+    print_tips('Find Complete')
+    print_result(param)
+
+
 def run():
     enter_bl_folder()
+    find_files()
 
 
 def show_entrance():
