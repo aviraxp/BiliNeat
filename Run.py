@@ -46,6 +46,11 @@ def find_key_text(name, param):
             if 'OnlineParamsHelper' in line:
                 param.online_helper_class = name
                 find_online_helper(file, param)
+            elif r'\u8be5\u76ae\u80a4\u4e0d\u5b58\u5728' in line:
+                param.theme_class = name
+                file.seek(0)
+                methods = re.findall('.method private a\(Lbl/([a-zA-z]{3});\)V', file.read())
+                param.theme_param_class = methods[0]
 
 
 def find_files():
