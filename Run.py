@@ -38,7 +38,12 @@ def print_result(param):
 
 # 从 OnlineHelper 的代码块匹配
 def get_online_method(line, content, regex):
-    pass
+    end = content.find(line)
+    start = content.rfind('.method', 0, end)
+
+    methods = regex.findall(content[start:end])
+
+    return methods[0]
 
 
 # 查找 OnlineHelper 中的方法名
