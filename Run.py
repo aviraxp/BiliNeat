@@ -104,7 +104,6 @@ def find_files():
     print_tips('Finding...')
     param = HookParam()
     walk_dir = os.walk(os.curdir)
-    exit()
 
     for root, dirs, files in walk_dir:
         # 遍历文件
