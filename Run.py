@@ -43,14 +43,21 @@ def find_online_helper(file, param):
 def find_key_text(name, param):
     with open(name, encoding='UTF-8') as file:
         for line in file:
+            # 在线参数配置
             if 'OnlineParamsHelper' in line:
                 param.online_helper_class = name
                 find_online_helper(file, param)
+
+            # 主题
             elif r'\u8be5\u76ae\u80a4\u4e0d\u5b58\u5728' in line:
                 param.theme_class = name
                 file.seek(0)
                 methods = re.findall('.method private a\(Lbl/([a-zA-z]{3});\)V', file.read())
                 param.theme_param_class = methods[0]
+
+            # 周边商城
+            elif 'http://bmall.bilibili.com' in line:
+                param.bmall_class = name
 
 
 def find_files():
