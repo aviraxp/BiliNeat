@@ -1,3 +1,17 @@
+class HookParam(object):
+    online_helper_class = 'NotFound'
+    category_method = 'NotFound'
+    toolbar_method = 'NotFound'
+    drawer_method = 'NotFound'
+    found_method = 'NotFound'
+    game_center_method = 'NotFound'
+
+    theme_class = 'NotFound'
+    theme_param_class = 'NotFound'
+
+    bmall_class = 'NotFound'
+
+
 def print_tips(text):
     print('\n>>> ' + text)
 
