@@ -1,5 +1,15 @@
+def print_tips(text):
+    print('\n>>> ' + text)
+
+
+def enter_bl_folder():
+    print_tips('切换到工作目录')
+    os.chdir('bl')
+    print(os.getcwd())
+
+
 def run():
-    pass
+    enter_bl_folder()
 
 
 if __name__ == '__main__':
