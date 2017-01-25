@@ -22,6 +22,20 @@ def enter_bl_folder():
     print(os.getcwd())
 
 
+def print_result(param):
+    print('OnlineHelper    = ' + param.online_helper_class)
+    print('isShowCategory  = ' + param.category_method)
+    print('isShowToolBar   = ' + param.toolbar_method)
+    print('isShowDraw      = ' + param.drawer_method)
+    print('isShowFound     = ' + param.found_method)
+    print('GameCenter      = ' + param.game_center_method)
+    print()
+    print('ThemeClass      = ' + param.theme_class)
+    print('ThemeParamClass = ' + param.theme_param_class)
+    print()
+    print('BMallClass      = ' + param.bmall_class)
+
+
 def run():
     enter_bl_folder()
 
