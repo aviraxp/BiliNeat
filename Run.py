@@ -36,8 +36,16 @@ def print_result(param):
     print('BMallClass      = ' + param.bmall_class)
 
 
-def find_key_text(name, param):
+def find_online_helper(file, param):
     pass
+
+
+def find_key_text(name, param):
+    with open(name, encoding='UTF-8') as file:
+        for line in file:
+            if 'OnlineParamsHelper' in line:
+                param.online_helper_class = name
+                find_online_helper(file, param)
 
 
 def find_files():
