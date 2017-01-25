@@ -36,12 +36,39 @@ def print_result(param):
     print('BMallClass      = ' + param.bmall_class)
 
 
-def find_online_helper(file, param):
+# 从 OnlineHelper 的代码块匹配
+def get_online_method(line, content, regex):
     pass
+
+
+# 查找 OnlineHelper 中的方法名
+def find_online_helper(file, param):
+    # 文件指针置 0
+    file.seek(0)
+
+    content = file.read()
+    regex = re.compile(r'.method public static ([a-zA-z])\(.*\)Z')
+
+    # 因为之前经过 read() 操作
+    # 所以这里文件指针再次置 0
+    file.seek(0)
+
+    for line in file:
+        if 'hide_gamecenter_in_category_channels' in line:
+            param.category_method = get_online_method(line, content, regex)
+        elif 'hide_gamecenter_in_toolbar_channels' in line:
+            param.toolbar_method = get_online_method(line, content, regex)
+        elif 'hide_app_recommend_in_drawer_channels' in line:
+            param.drawer_method = get_online_method(line, content, regex)
+        elif 'hide_gamecenter_in_discover_channels' in line:
+            param.found_method = get_online_method(line, content, regex)
+        elif 'hide_gamecenter_in_game_tid_channels' in line:
+            param.game_center_method = get_online_method(line, content, regex)
 
 
 def find_key_text(name, param):
     with open(name, encoding='UTF-8') as file:
+        # 逐行遍历文件内容
         for line in file:
             # 在线参数配置
             if 'OnlineParamsHelper' in line:
@@ -67,6 +94,7 @@ def find_files():
     exit()
 
     for root, dirs, files in walk_dir:
+        # 遍历文件
         for name in files:
             find_key_text(name, param)
 
