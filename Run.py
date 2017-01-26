@@ -42,6 +42,9 @@ def print_result(param):
     print()
     print('BMallClass      = ' + param.bmall_class)
 
+    print()
+    os.system('pause')
+
 
 # 从 OnlineHelper 的代码块匹配
 def get_online_method(line, content, regex):
@@ -132,7 +135,6 @@ def run():
 def decode_dex():
     try:
         path = sys.argv[1]
-        print(path)
     except IndexError:
         print_tips('Class.dex File Not Found')
         exit()
