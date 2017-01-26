@@ -140,7 +140,9 @@ def decode_dex():
         exit()
     else:
         print_tips('Decode class.dex...')
-        os.system('java -jar baksmali.jar disassemble ' + path)
+        # 因为 bat 拖动是当前环境执行
+        # 所以相对环境的进入目录加上了 autoscript
+        os.system('java -jar autoscript/baksmali.jar disassemble ' + path)
 
 
 def show_entrance():
