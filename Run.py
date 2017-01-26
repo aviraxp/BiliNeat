@@ -119,18 +119,29 @@ def run():
     find_files()
 
 
+def decode_dex():
+    try:
+        path = sys.argv[1]
+        print(path)
+    except IndexError:
+        print_tips('Class.dex File Not Found')
+        exit()
+    else:
+        print_tips('Decode class.dex...')
+        os.system('java -jar baksmali.jar disassemble ' + path)
+
+
 def show_entrance():
     print()
-    print('===================================')
-    print('‖                                 ‖')
-    print('‖    BiliNeat Adaptive Script     ‖')
-    print('‖           Author:iAcn           ‖')
-    print('‖                                 ‖')
-    print('===================================')
+    print('====================================')
+    print('‖                                ‖')
+    print('‖    BiliNeat Adaptive Script    ‖')
+    print('‖          Author:iAcn           ‖')
+    print('‖                                ‖')
+    print('====================================')
 
 
 if __name__ == '__main__':
-    # 暂时用作工作目录
-    os.chdir('C:/Users/Administrator/Desktop/iBiliPlayer-bili')
     show_entrance()
+    decode_dex()
     run()
