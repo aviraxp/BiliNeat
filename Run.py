@@ -1,5 +1,8 @@
 import os
 import re
+import shutil
+
+import sys
 
 
 class HookParam(object):
@@ -22,7 +25,7 @@ def print_tips(text):
 
 def enter_bl_folder():
     print_tips('Enter Working Directory')
-    os.chdir('bl')
+    os.chdir('out/bl')
     print(os.getcwd())
 
 
@@ -109,6 +112,13 @@ def find_files():
         # 遍历文件
         for name in files:
             find_key_text(name, param)
+
+    # 切换回脚本目录
+    os.chdir('../..')
+
+    if os.path.exists('out'):
+        print_tips('Delete Temp Files')
+        shutil.rmtree('out')
 
     print_tips('Find Complete')
     print_result(param)
