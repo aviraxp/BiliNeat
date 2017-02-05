@@ -6,9 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import me.iacn.bilineat.hook.LayoutHook;
-import me.iacn.bilineat.hook.MethodHook;
-
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -16,6 +13,8 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import me.iacn.bilineat.hook.LayoutHook;
+import me.iacn.bilineat.hook.MethodHook;
 
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.callStaticMethod;

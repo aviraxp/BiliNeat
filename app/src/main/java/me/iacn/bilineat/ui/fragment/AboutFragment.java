@@ -11,10 +11,9 @@ import android.preference.SwitchPreference;
 import android.widget.Toast;
 
 import me.iacn.bilineat.BuildConfig;
-import com.iacn.bilineat.Constant;
+import me.iacn.bilineat.Constant;
 import me.iacn.bilineat.R;
 import me.iacn.bilineat.ui.MainActivity;
-
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 /**
