@@ -6,20 +6,23 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.iacn.bilineat.R;
 import com.iacn.bilineat.ui.fragment.AboutFragment;
 import com.iacn.bilineat.ui.fragment.ActionFragment;
 import com.iacn.bilineat.ui.fragment.NeatFragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,26 +72,15 @@ public class MainActivity extends AppCompatActivity {
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                Menu menu = mBottomBar.getMenu();
+                try {
+                    BottomNavigationMenuView mMenuView = getDeclaredFieldFromClass(mBottomBar, "mMenuView", BottomNavigationMenuView.class);
+                    BottomNavigationItemView[] mButtons = getDeclaredFieldFromClass(mMenuView, "mButtons", BottomNavigationItemView[].class);
+                    View.OnClickListener mOnClickListener = getDeclaredFieldFromClass(mMenuView, "mOnClickListener", View.OnClickListener.class);
 
-                switch (position) {
-                    case 0:
-                        menu.getItem(0).setChecked(true);
-                        menu.getItem(1).setChecked(false);
-                        menu.getItem(2).setChecked(false);
-                        break;
+                    mOnClickListener.onClick(mButtons[position]);
 
-                    case 1:
-                        menu.getItem(0).setChecked(false);
-                        menu.getItem(1).setChecked(true);
-                        menu.getItem(2).setChecked(false);
-                        break;
-
-                    case 2:
-                        menu.getItem(0).setChecked(false);
-                        menu.getItem(1).setChecked(false);
-                        menu.getItem(2).setChecked(true);
-                        break;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -154,5 +146,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private <T> T getDeclaredFieldFromClass(Object obj, String fieldName, Class<T> clazz) {
+        try {
+            Field field = obj.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+
+            return (T) field.get(obj);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
