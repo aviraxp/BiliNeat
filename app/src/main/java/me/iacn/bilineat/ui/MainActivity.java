@@ -72,16 +72,16 @@ public class MainActivity extends AppCompatActivity {
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                try {
-                    BottomNavigationMenuView mMenuView = getDeclaredFieldFromClass(mBottomBar, "mMenuView", BottomNavigationMenuView.class);
-                    BottomNavigationItemView[] mButtons = getDeclaredFieldFromClass(mMenuView, "mButtons", BottomNavigationItemView[].class);
-                    View.OnClickListener mOnClickListener = getDeclaredFieldFromClass(mMenuView, "mOnClickListener", View.OnClickListener.class);
+                BottomNavigationMenuView mMenuView = ReflectUtils.getObjectField(mBottomBar,
+                        "mMenuView", BottomNavigationMenuView.class);
 
-                    mOnClickListener.onClick(mButtons[position]);
+                BottomNavigationItemView[] mButtons = ReflectUtils.getObjectField(mMenuView,
+                        "mButtons", BottomNavigationItemView[].class);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                View.OnClickListener mOnClickListener = ReflectUtils.getObjectField(mMenuView,
+                        "mOnClickListener", View.OnClickListener.class);
+
+                mOnClickListener.onClick(mButtons[position]);
             }
         });
 
@@ -146,11 +146,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }
-
-    private <T> T getDeclaredFieldFromClass(Object obj, String fieldName, Class<T> clazz) {
-        T aaaa = ReflectUtils.getObjectField(obj, "aaaa", clazz);
-
-        return aaaa;
     }
 }
