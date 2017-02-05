@@ -21,6 +21,7 @@ import me.iacn.bilineat.R;
 import me.iacn.bilineat.ui.fragment.AboutFragment;
 import me.iacn.bilineat.ui.fragment.ActionFragment;
 import me.iacn.bilineat.ui.fragment.NeatFragment;
+import me.iacn.bilineat.util.ReflectUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -149,15 +150,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private <T> T getDeclaredFieldFromClass(Object obj, String fieldName, Class<T> clazz) {
-        try {
-            Field field = obj.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
+        T aaaa = ReflectUtils.getObjectField(obj, "aaaa", clazz);
 
-            return (T) field.get(obj);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return aaaa;
     }
 }

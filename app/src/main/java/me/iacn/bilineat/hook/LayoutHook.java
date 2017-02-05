@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iacn.bilineat.Constant;
+import me.iacn.bilineat.Constant;
 
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import me.iacn.bilineat.XposedInit;

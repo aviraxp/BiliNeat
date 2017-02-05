@@ -10,8 +10,8 @@ import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.View;
 
-import me.iacn.bilineat.BuildConfig;
-import com.iacn.bilineat.Constant;
+
+import com.iacn.bilineat.BuildConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,6 +20,7 @@ import java.util.List;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
+import me.iacn.bilineat.Constant;
 import me.iacn.bilineat.XposedInit;
 
 import static de.robv.android.xposed.XposedHelpers.callMethod;

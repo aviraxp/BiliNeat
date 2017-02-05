@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iacn.bilineat">
+    package="me.iacn.bilineat">
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
 
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
 
