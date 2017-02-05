@@ -1,4 +1,4 @@
-package com.iacn.bilineat;
+package me.iacn.bilineat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -6,8 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.iacn.bilineat.hook.LayoutHook;
-import com.iacn.bilineat.hook.MethodHook;
+import me.iacn.bilineat.hook.LayoutHook;
+import me.iacn.bilineat.hook.MethodHook;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;

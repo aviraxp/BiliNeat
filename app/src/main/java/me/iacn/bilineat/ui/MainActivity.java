@@ -1,4 +1,4 @@
-package com.iacn.bilineat.ui;
+package me.iacn.bilineat.ui;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,10 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.iacn.bilineat.R;
-import com.iacn.bilineat.ui.fragment.AboutFragment;
-import com.iacn.bilineat.ui.fragment.ActionFragment;
-import com.iacn.bilineat.ui.fragment.NeatFragment;
+import me.iacn.bilineat.R;
+import me.iacn.bilineat.ui.fragment.AboutFragment;
+import me.iacn.bilineat.ui.fragment.ActionFragment;
+import me.iacn.bilineat.ui.fragment.NeatFragment;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

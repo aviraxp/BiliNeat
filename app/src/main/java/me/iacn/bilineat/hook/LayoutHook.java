@@ -1,4 +1,4 @@
-package com.iacn.bilineat.hook;
+package me.iacn.bilineat.hook;
 
 import android.content.res.XResources;
 import android.text.util.Linkify;
@@ -9,8 +9,7 @@ import android.widget.TextView;
 import com.iacn.bilineat.Constant;
 
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
-
-import static com.iacn.bilineat.XposedInit.xSharedPref;
+import me.iacn.bilineat.XposedInit;
 
 /**
  * Created by iAcn on 2016/10/5
@@ -26,7 +25,7 @@ public class LayoutHook {
      */
     public void doHook(XResources res) {
         // 去除发现里的兴趣圈
-        if (xSharedPref.getBoolean("found_group", false)) {
+        if (XposedInit.xSharedPref.getBoolean("found_group", false)) {
             res.hookLayout(Constant.biliPackageName, "layout", "bili_app_fragment_discover", new XC_LayoutInflated() {
                 @Override
                 public void handleLayoutInflated(LayoutInflatedParam layoutInflatedParam) throws Throwable {
@@ -38,7 +37,7 @@ public class LayoutHook {
         }
 
         // 将评论里的部分网址转换为可点击的链接
-        if (xSharedPref.getBoolean("auto_link", false)) {
+        if (XposedInit.xSharedPref.getBoolean("auto_link", false)) {
             res.hookLayout(Constant.biliPackageName, "layout", "bili_app_layout_list_item_feedback_item_include",
                     new XC_LayoutInflated() {
                         @Override
@@ -61,7 +60,7 @@ public class LayoutHook {
         });
 
         // 添加 1080P 优先
-        if (xSharedPref.getBoolean("default_1080p", false)) {
+        if (XposedInit.xSharedPref.getBoolean("default_1080p", false)) {
             res.setReplacement(Constant.biliPackageName, "array", "pref_player_mediaSource_entries",
                     new String[]{
                             "自动选择",

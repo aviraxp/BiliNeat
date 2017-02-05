@@ -1,4 +1,4 @@
-package com.iacn.bilineat.ui;
+package me.iacn.bilineat.ui;
 
 import android.app.Activity;
 import android.content.Context;

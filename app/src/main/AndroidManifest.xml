@@ -8,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="me.iacn.bilineat.ui.MainActivity">
 
             <intent-filter>
 
@@ -25,7 +25,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Alias"
             android:enabled="false"
-            android:targetActivity=".ui.MainActivity">
+            android:targetActivity="me.iacn.bilineat.ui.MainActivity">
 
             <intent-filter>
 

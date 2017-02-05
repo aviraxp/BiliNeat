@@ -1,6 +1,4 @@
-package com.iacn.bilineat.ui.fragment;
-
-import com.iacn.bilineat.R;
+package me.iacn.bilineat.ui.fragment;
 
 /**
  * Created by iAcn on 2016/10/28
@@ -11,6 +9,6 @@ public class NeatFragment extends BaseFragment {
 
     @Override
     protected int getXmlId() {
-        return R.xml.pref_neat;
+        return me.iacn.bilineat.R.xml.pref_neat;
     }
 }

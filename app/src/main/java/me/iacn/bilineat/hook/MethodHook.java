@@ -1,4 +1,4 @@
-package com.iacn.bilineat.hook;
+package me.iacn.bilineat.hook;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -10,7 +10,7 @@ import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.View;
 
-import com.iacn.bilineat.BuildConfig;
+import me.iacn.bilineat.BuildConfig;
 import com.iacn.bilineat.Constant;
 
 import java.lang.reflect.Field;
@@ -20,8 +20,8 @@ import java.util.List;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
+import me.iacn.bilineat.XposedInit;
 
-import static com.iacn.bilineat.XposedInit.xSharedPref;
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
@@ -49,12 +49,12 @@ public class MethodHook {
     public void doHook(ClassLoader classLoader, String currentVersion) {
         mClassLoader = classLoader;
 
-        boolean isShowCategory = !xSharedPref.getBoolean("category_game", true);
-        boolean isShowFound = !xSharedPref.getBoolean("found_game", true);
-        boolean isShowToolBar = !xSharedPref.getBoolean("toolbar_game", true);
-        boolean isShowDraw = !xSharedPref.getBoolean("drawer_promote", true);
+        boolean isShowCategory = !XposedInit.xSharedPref.getBoolean("category_game", true);
+        boolean isShowFound = !XposedInit.xSharedPref.getBoolean("found_game", true);
+        boolean isShowToolBar = !XposedInit.xSharedPref.getBoolean("toolbar_game", true);
+        boolean isShowDraw = !XposedInit.xSharedPref.getBoolean("drawer_promote", true);
 
-        int homeIndex = Integer.parseInt(xSharedPref.getString("default_page", "1"));
+        int homeIndex = Integer.parseInt(XposedInit.xSharedPref.getString("default_page", "1"));
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
@@ -135,7 +135,7 @@ public class MethodHook {
      * 去除发现里的周边商城
      */
     private void removeFoundMall(String className) {
-        if (!xSharedPref.getBoolean("found_mall", false)) return;
+        if (!XposedInit.xSharedPref.getBoolean("found_mall", false)) return;
 
         findAndHookMethod("bl." + className, mClassLoader, "onViewCreated", View.class,
                 Bundle.class, new XC_MethodHook() {
@@ -157,8 +157,8 @@ public class MethodHook {
      * 去除侧边栏我的大会员
      */
     private void removeDrawerVip() {
-        final boolean myVip = !xSharedPref.getBoolean("drawer_my_vip", false);
-        final boolean vipPoint = !xSharedPref.getBoolean("drawer_vip_point", false);
+        final boolean myVip = !XposedInit.xSharedPref.getBoolean("drawer_my_vip", false);
+        final boolean vipPoint = !XposedInit.xSharedPref.getBoolean("drawer_vip_point", false);
 
         // Q：为什么要使用这种方式来判断？
         // A：因为 Hook 是一项很占资源的操作，这里为了节省资源

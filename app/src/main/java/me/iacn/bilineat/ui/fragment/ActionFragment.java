@@ -1,9 +1,7 @@
-package com.iacn.bilineat.ui.fragment;
+package me.iacn.bilineat.ui.fragment;
 
 import android.preference.ListPreference;
 import android.preference.Preference;
-
-import com.iacn.bilineat.R;
 
 /**
  * Created by iAcn on 2016/10/28
@@ -16,7 +14,7 @@ public class ActionFragment extends BaseFragment implements Preference.OnPrefere
 
     @Override
     protected int getXmlId() {
-        return R.xml.pref_action;
+        return me.iacn.bilineat.R.xml.pref_action;
     }
 
     @Override
