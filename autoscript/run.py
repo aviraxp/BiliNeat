@@ -4,6 +4,8 @@ import shutil
 
 import sys
 
+SCRIPT_DIR = sys.path[0]
+
 
 class HookParam(object):
     online_helper_class = 'NotFound'
@@ -25,7 +27,7 @@ def print_tips(text):
 
 def enter_bl_folder():
     print_tips('Enter Working Directory')
-    os.chdir('out/bl')
+    os.chdir(os.path.join(SCRIPT_DIR, 'out/bl'))
     print(os.getcwd())
 
 
@@ -140,9 +142,12 @@ def decode_dex():
         exit()
     else:
         print_tips('Decode class.dex...')
-        # 因为 bat 拖动是当前环境执行
-        # 所以相对环境的进入目录加上了 autoscript
-        os.system('java -jar autoscript/baksmali.jar disassemble ' + path)
+
+        command = 'java -jar {jarPath} disassemble {apkPath} -o {outDir}'
+        os.system(command
+                  .replace('{jarPath}', os.path.join(SCRIPT_DIR, 'baksmali.jar'))
+                  .replace('{apkPath}', path)
+                  .replace('{outDir}', os.path.join(SCRIPT_DIR, 'out')))
 
 
 def show_entrance():
