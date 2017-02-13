@@ -8,17 +8,18 @@ SCRIPT_DIR = sys.path[0]
 
 
 class HookParam(object):
-    online_helper_class = 'NotFound'
-    category_method = 'NotFound'
-    toolbar_method = 'NotFound'
-    drawer_method = 'NotFound'
-    found_method = 'NotFound'
-    game_center_method = 'NotFound'
+    def __init__(self):
+        self.online_helper_class = 'NotFound'
+        self.category_method = 'NotFound'
+        self.toolbar_method = 'NotFound'
+        self.drawer_method = 'NotFound'
+        self.found_method = 'NotFound'
+        self.game_center_method = 'NotFound'
 
-    theme_class = 'NotFound'
-    theme_param_class = 'NotFound'
+        self.theme_class = 'NotFound'
+        self.theme_param_class = 'NotFound'
 
-    bmall_class = 'NotFound'
+        self.bmall_class = 'NotFound'
 
 
 def print_tips(text):
