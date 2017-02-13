@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import me.iacn.bilineat.BuildConfig;
@@ -78,19 +79,8 @@ public class AboutFragment extends BaseFragment implements Preference.OnPreferen
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == version) {
-            String[] supportVersions = Constant.supportVersions;
-            StringBuilder builder = new StringBuilder();
-            builder.append("支持哔哩哔哩版本:\n");
-
-            for (int i = 0; i < supportVersions.length; i++) {
-                builder.append(supportVersions[i]);
-
-                if (i < supportVersions.length - 1) {
-                    builder.append(", ");
-                }
-            }
-
-            Toast.makeText(getActivity(), builder.toString(), Toast.LENGTH_SHORT).show();
+            String text = "支持哔哩哔哩版本:\n" + TextUtils.join(", ", Constant.supportVersions);
+            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
             return true;
         } else if (preference == donate) {
             openAliPay();
