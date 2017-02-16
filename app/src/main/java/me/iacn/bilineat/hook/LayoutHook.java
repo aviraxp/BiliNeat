@@ -57,23 +57,5 @@ public class LayoutHook {
                 game.setVisibility(View.GONE);
             }
         });
-
-        // 添加 1080P 优先
-        if (XposedInit.xSharedPref.getBoolean("default_1080p", false)) {
-            res.setReplacement(Constant.biliPackageName, "array", "pref_player_mediaSource_entries",
-                    new String[]{
-                            "自动选择",
-                            "流畅优先",
-                            "高清优先",
-                            "超清优先",
-                            "1080P优先"});
-            res.setReplacement(Constant.biliPackageName, "array", "pref_player_mediaSource_entryValues",
-                    new String[]{
-                            "0",
-                            "100",
-                            "200",
-                            "400",
-                            "800"});
-        }
     }
 }
