@@ -57,6 +57,16 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "4.35.0":
+                hookResult("dfl", "e", boolean.class, isShowCategory);
+                hookResult("dfl", "f", boolean.class, isShowToolBar);
+                hookResult("dfl", "g", boolean.class, isShowDraw);
+                hookResult("dfl", "h", boolean.class, isShowFound);
+                hookResult("dfl", "i", boolean.class, false);
+                hookTheme("ent", "arr");
+                removeFoundMall("dwz");
+                break;
+
             case "4.34.0":
                 hookResult("dfr", "e", boolean.class, isShowCategory);
                 hookResult("dfr", "f", boolean.class, isShowToolBar);
