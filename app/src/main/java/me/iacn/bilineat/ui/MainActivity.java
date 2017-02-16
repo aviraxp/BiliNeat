@@ -27,11 +27,15 @@ import me.iacn.bilineat.ui.fragment.NeatFragment;
 import me.iacn.bilineat.util.ReflectUtils;
 import me.iacn.bilineat.util.StatusBarUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager mPager;
-    private BottomNavigationView mBottomBar;
     private SharedPreferences mSharePref;
+
+    private BottomNavigationItemView[] mButtons;
+    private View.OnClickListener mOnClickListener;
+    private BottomNavigationView mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +43,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         StatusBarUtils.setColor(this, getResources().getColor(R.color.pink));
 
+        findView();
+        initActionBar();
+        initData();
+        setListener();
+        showExplainDialog();
+    }
+
+    private void findView() {
         mPager = (ViewPager) findViewById(R.id.view_pager);
         mBottomBar = (BottomNavigationView) findViewById(R.id.bottom_bar);
+    }
 
+    private void initActionBar() {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
 
+    private void initData() {
         mSharePref = getSharedPreferences("setting", MODE_WORLD_READABLE);
 
-        if (mSharePref.getBoolean("show_explain", true)) showExplainDialog();
+        BottomNavigationMenuView mMenuView = ReflectUtils.getObjectField(mBottomBar,
+                "mMenuView", BottomNavigationMenuView.class);
+
+        mButtons = ReflectUtils.getObjectField(mMenuView,
+                "mButtons", BottomNavigationItemView[].class);
+
+        mOnClickListener = ReflectUtils.getObjectField(mMenuView,
+                "mOnClickListener", View.OnClickListener.class);
 
         final List<Fragment> pageList = new ArrayList<>();
         pageList.add(new NeatFragment());
@@ -69,46 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 return pageList.size();
             }
         });
+    }
 
-        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                BottomNavigationMenuView mMenuView = ReflectUtils.getObjectField(mBottomBar,
-                        "mMenuView", BottomNavigationMenuView.class);
-
-                BottomNavigationItemView[] mButtons = ReflectUtils.getObjectField(mMenuView,
-                        "mButtons", BottomNavigationItemView[].class);
-
-                View.OnClickListener mOnClickListener = ReflectUtils.getObjectField(mMenuView,
-                        "mOnClickListener", View.OnClickListener.class);
-
-                mOnClickListener.onClick(mButtons[position]);
-            }
-        });
-
-        mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_neat:
-                        mPager.setCurrentItem(0);
-                        break;
-
-                    case R.id.menu_action:
-                        mPager.setCurrentItem(1);
-                        break;
-
-                    case R.id.menu_about:
-                        mPager.setCurrentItem(2);
-                        break;
-
-                    default:
-                        return false;
-                }
-
-                return true;
-            }
-        });
+    private void setListener() {
+        mPager.addOnPageChangeListener(this);
+        mBottomBar.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -123,29 +111,54 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * 显示说明提示框
-     */
+    @Override
+    public void onPageSelected(int position) {
+        mOnClickListener.onClick(mButtons[position]);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_neat:
+                mPager.setCurrentItem(0);
+                break;
+
+            case R.id.menu_action:
+                mPager.setCurrentItem(1);
+                break;
+
+            case R.id.menu_about:
+                mPager.setCurrentItem(2);
+                break;
+
+            default:
+                return false;
+        }
+
+        return true;
+    }
+
     private void showExplainDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (mSharePref.getBoolean("showed_explain", false)) return;
 
-        builder.setTitle("说明");
-        builder.setMessage("1.本应用仅供技术交流，免费无广告，请勿用于商业及非法用途，如产生法律纠纷与作者无关\n\n2.私自修改本应用、利用本应用牟利等行为，后果由修改/传播者承担\n\n3.使用本应用所造成的一切后果自负\n\n4.如果确定，即你已默认同意以上条款");
-
-        builder.setNegativeButton("不再提醒", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSharePref.edit().putBoolean("show_explain", false).apply();
-            }
-        });
-
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.show();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.first_open_title)
+                .setMessage(R.string.first_open_hint_message)
+                .setPositiveButton(R.string.ok, null)
+                .setNegativeButton(R.string.no_longer_remind, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSharePref.edit().putBoolean("showed_explain", true).apply();
+                    }
+                })
+                .show();
     }
 }
