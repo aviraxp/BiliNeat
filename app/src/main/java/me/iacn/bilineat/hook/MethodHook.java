@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -22,13 +23,16 @@ import me.iacn.bilineat.Constant;
 import me.iacn.bilineat.XposedInit;
 
 import static de.robv.android.xposed.XposedHelpers.callMethod;
+import static de.robv.android.xposed.XposedHelpers.findAndHookConstructor;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.findFirstFieldByExactType;
 import static de.robv.android.xposed.XposedHelpers.findMethodsByExactParameters;
+import static de.robv.android.xposed.XposedHelpers.getBooleanField;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 import static de.robv.android.xposed.XposedHelpers.setBooleanField;
 import static de.robv.android.xposed.XposedHelpers.setIntField;
+import static de.robv.android.xposed.XposedHelpers.setObjectField;
 
 /**
  * Created by iAcn on 2016/10/5
@@ -65,6 +69,7 @@ public class MethodHook {
                 hookResult("dfl", "i", boolean.class, false);
                 hookTheme("ent", "arr");
                 removeFoundMall("dwz");
+                removePromoBanner("dyu");
                 break;
 
             case "4.34.0":
@@ -160,6 +165,36 @@ public class MethodHook {
                         }
                     }
                 });
+    }
+
+    private void removePromoBanner(String className) {
+        if (!XposedInit.xSharedPref.getBoolean("promo_banner", false)) return;
+
+        Class<?> clazz = findClass("com.bilibili.api.promo.BiliPromoV2", mClassLoader);
+
+        findAndHookConstructor("bl." + className, mClassLoader, clazz, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                Object biliPromoV2 = param.args[0];
+
+                if (biliPromoV2 == null) return;
+
+                Object topBanners = getObjectField(biliPromoV2, "topBanners");
+                List list = (List) getObjectField(topBanners, "list");
+
+                if (list != null) {
+                    List newList = new ArrayList();
+
+                    for (Object obj : list) {
+                        boolean isAd = getBooleanField(obj, "isAd");
+
+                        if (!isAd) newList.add(obj);
+                    }
+
+                    setObjectField(topBanners, "list", newList);
+                }
+            }
+        });
     }
 
     /**
