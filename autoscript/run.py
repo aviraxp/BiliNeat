@@ -67,7 +67,7 @@ def find_online_helper(file, param):
     file.seek(0)
 
     content = file.read()
-    regex = re.compile(r'.method public static ([a-zA-z])\(.*\)Z')
+    regex = re.compile(r'\.method public static ([a-zA-z])\(.*\)Z')
 
     # 因为之前经过 read() 操作
     # 所以这里文件指针再次置 0
@@ -107,7 +107,7 @@ def find_key_text(name, param):
             elif r'\u8be5\u76ae\u80a4\u4e0d\u5b58\u5728' in line:
                 param.theme_class = name
                 file.seek(0)
-                methods = re.findall('.method private a\(Lbl/([a-zA-z]{3});\)V', file.read())
+                methods = re.findall('\.method private a\(Lbl/([a-zA-z]{3});\)V', file.read())
                 param.theme_param_class = methods[0]
 
             # 周边商城
