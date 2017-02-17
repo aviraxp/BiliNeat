@@ -20,6 +20,7 @@ class HookParam(object):
         self.theme_param_class = 'NotFound'
 
         self.bmall_class = 'NotFound'
+        self.banner_class = 'NotFound'
 
 
 def print_tips(text):
@@ -44,6 +45,7 @@ def print_result(param):
     print('ThemeParamClass = ' + param.theme_param_class)
     print()
     print('BMallClass      = ' + param.bmall_class)
+    print('BannerClass     = ' + param.banner_class)
 
     print()
     os.system('pause')
@@ -90,6 +92,10 @@ def find_online_helper(file, param):
 
 def find_key_text(name, param):
     with open(name, encoding='UTF-8') as file:
+
+        regex = re.compile(r'\s+iget-object v\d+, v\d+, Lcom/bilibili/api/promo/BiliPromoV2;'
+                           r'->topBanners:Lcom/bilibili/api/promo/BiliPromoV2\$[a-z]+;')
+
         # 逐行遍历文件内容
         for line in file:
             # 在线参数配置
@@ -107,6 +113,10 @@ def find_key_text(name, param):
             # 周边商城
             elif 'http://bmall.bilibili.com' in line:
                 param.bmall_class = name
+
+            # 首页推荐
+            elif regex.match(line):
+                param.banner_class = name
 
 
 def find_files():
