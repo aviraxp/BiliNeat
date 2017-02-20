@@ -61,6 +61,7 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "4.35.1":
             case "4.35.0":
                 hookResult("dfl", "e", boolean.class, isShowCategory);
                 hookResult("dfl", "f", boolean.class, isShowToolBar);
