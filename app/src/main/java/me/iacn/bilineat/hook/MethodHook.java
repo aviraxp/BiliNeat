@@ -82,17 +82,6 @@ public class MethodHook {
                 hookTheme("enb", "arq");
                 removeFoundMall("dwh");
                 break;
-
-            case "4.33.3":
-            case "4.33.0":
-                hookResult("cez", "e", boolean.class, isShowCategory);
-                hookResult("cez", "f", boolean.class, isShowToolBar);
-                hookResult("cez", "g", boolean.class, isShowDraw);
-                hookResult("cez", "h", boolean.class, isShowFound);
-                hookResult("cez", "i", boolean.class, false);
-                hookTheme("dmv", "ase");
-                removeFoundMall("cwa");
-                break;
         }
 
         removeDrawerVip();
