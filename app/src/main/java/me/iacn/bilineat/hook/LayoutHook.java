@@ -23,7 +23,7 @@ public class LayoutHook {
      * @param res Xposed 的 XResources
      */
     public void doHook(XResources res) {
-        /*// 去除发现里的兴趣圈
+        // 去除发现里的兴趣圈
         if (XposedInit.xSharedPref.getBoolean("found_group", false)) {
             res.hookLayout(Constant.biliPackageName, "layout", "bili_app_fragment_discover", new XC_LayoutInflated() {
                 @Override
@@ -46,7 +46,7 @@ public class LayoutHook {
                             textView.setAutoLinkMask(Linkify.WEB_URLS);
                         }
                     });
-        }*/
+        }
 
         // 去除分区列表流里的游戏中心
         res.hookLayout(Constant.biliPackageName, "layout", "bili_app_index_more_game", new XC_LayoutInflated() {
