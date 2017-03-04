@@ -52,21 +52,21 @@ public class MethodHook {
     public void doHook(ClassLoader classLoader, String currentVersion) {
         mClassLoader = classLoader;
 
-        boolean isShowCategory = !XposedInit.xSharedPref.getBoolean("category_game", true);
-        boolean isShowFound = !XposedInit.xSharedPref.getBoolean("found_game", true);
-        boolean isShowToolBar = !XposedInit.xSharedPref.getBoolean("toolbar_game", true);
-        boolean isShowDraw = !XposedInit.xSharedPref.getBoolean("drawer_promote", true);
+        boolean isCategoryGame = !XposedInit.xSharedPref.getBoolean("category_game", true);
+        boolean isFoundGame = !XposedInit.xSharedPref.getBoolean("found_game", true);
+        boolean isToolbarGame = !XposedInit.xSharedPref.getBoolean("toolbar_game", true);
+        boolean isDrawerPromote = !XposedInit.xSharedPref.getBoolean("drawer_promote", true);
 
         int homeIndex = Integer.parseInt(XposedInit.xSharedPref.getString("default_page", "1"));
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
             case "5.0.0":
-                hookResult("dhx", "e", boolean.class, isShowCategory);
-                hookResult("dhx", "f", boolean.class, isShowToolBar);
-                hookResult("dhx", "g", boolean.class, isShowDraw);
-                hookResult("dhx", "h", boolean.class, isShowFound);
-                hookResult("dhx", "i", boolean.class, isShowCategory);
+                hookResult("dhx", "e", boolean.class, isCategoryGame);
+                hookResult("dhx", "f", boolean.class, isToolbarGame);
+                hookResult("dhx", "g", boolean.class, isDrawerPromote);
+                hookResult("dhx", "h", boolean.class, isFoundGame);
+                hookResult("dhx", "i", boolean.class, isCategoryGame);
 //                hookTheme("ent", "arr");
 //                removeFoundMall("dwz");
 //                removePromoBanner("dyu");

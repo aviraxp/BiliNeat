@@ -16,7 +16,7 @@
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="toolbar_game"
-        android:summary="去除Toolbar里的游戏中心按钮"
+        android:summary="去除 Toolbar 里的游戏中心按钮"
         android:title="关闭顶栏广告" />
 
     <CheckBoxPreference
