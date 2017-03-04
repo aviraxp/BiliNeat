@@ -233,24 +233,19 @@ public class MethodHook {
         Method[] methods = findMethodsByExactParameters(
                 findClass("com.bilibili.api.bangumi.BiliBangumiSeason", mClassLoader), boolean.class);
 
-        XposedBridge.hookMethod(methods[0], new XC_MethodHook() {
-
+        XC_MethodHook downloadableHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 setBooleanField(param.thisObject, "mDownloadable", true);
             }
-        });
+        };
 
-        findAndHookMethod("tv.danmaku.bili.ui.bangumi.BangumiDetailActivity", mClassLoader, "p", new XC_MethodHook() {
-
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Class<?> seasonDetailClass = findClass("com.bilibili.api.bangumi.BiliBangumiSeasonDetail", mClassLoader);
-
-                Field field = findFirstFieldByExactType(param.thisObject.getClass(), seasonDetailClass);
-                setBooleanField(field.get(param.thisObject), "mDownloadable", true);
+        for (Method method : methods) {
+            String name = method.getName();
+            if ("a".equals(name) || "d".equals(name)) {
+                XposedBridge.hookMethod(method, downloadableHook);
             }
-        });
+        }
     }
 
     /**
