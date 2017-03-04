@@ -66,7 +66,7 @@ public class MethodHook {
                 hookResult("dhx", "f", boolean.class, isShowToolBar);
                 hookResult("dhx", "g", boolean.class, isShowDraw);
                 hookResult("dhx", "h", boolean.class, isShowFound);
-//                hookResult("dfl", "i", boolean.class, false);
+                hookResult("dhx", "i", boolean.class, isShowCategory);
 //                hookTheme("ent", "arr");
 //                removeFoundMall("dwz");
 //                removePromoBanner("dyu");
