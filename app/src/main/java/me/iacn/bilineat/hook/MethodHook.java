@@ -73,6 +73,11 @@ public class MethodHook {
                 break;
         }
 
+        hookThemeDialog();
+        hookBangumi();
+        hookMovie();
+        addNeatEntrance();
+
         /*removeDrawerVip();
         hookThemeDialog();
         hookBangumi();
