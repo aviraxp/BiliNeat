@@ -83,6 +83,6 @@ public class XposedInit implements IXposedHookZygoteInit, IXposedHookLoadPackage
         if (!Constant.biliPackageName.equals(resParam.packageName)) return;
 
         xSharedPref.reload();
-        new LayoutHook().doHook(resParam.res);
+//        new LayoutHook().doHook(resParam.res);
     }
 }

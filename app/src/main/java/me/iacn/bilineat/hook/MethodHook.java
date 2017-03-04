@@ -61,35 +61,24 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
-            case "4.35.1":
-            case "4.35.0":
-                hookResult("dfl", "e", boolean.class, isShowCategory);
-                hookResult("dfl", "f", boolean.class, isShowToolBar);
-                hookResult("dfl", "g", boolean.class, isShowDraw);
-                hookResult("dfl", "h", boolean.class, isShowFound);
-                hookResult("dfl", "i", boolean.class, false);
-                hookTheme("ent", "arr");
-                removeFoundMall("dwz");
-                removePromoBanner("dyu");
-                break;
-
-            case "4.34.0":
-                hookResult("dfr", "e", boolean.class, isShowCategory);
-                hookResult("dfr", "f", boolean.class, isShowToolBar);
-                hookResult("dfr", "g", boolean.class, isShowDraw);
-                hookResult("dfr", "h", boolean.class, isShowFound);
-                hookResult("dfr", "i", boolean.class, false);
-                hookTheme("enb", "arq");
-                removeFoundMall("dwh");
+            case "5.0.0":
+                hookResult("dhx", "e", boolean.class, isShowCategory);
+                hookResult("dhx", "f", boolean.class, isShowToolBar);
+                hookResult("dhx", "g", boolean.class, isShowDraw);
+                hookResult("dhx", "h", boolean.class, isShowFound);
+//                hookResult("dfl", "i", boolean.class, false);
+//                hookTheme("ent", "arr");
+//                removeFoundMall("dwz");
+//                removePromoBanner("dyu");
                 break;
         }
 
-        removeDrawerVip();
+        /*removeDrawerVip();
         hookThemeDialog();
         hookBangumi();
         hookMovie();
         hookPage(homeIndex);
-        addNeatEntrance();
+        addNeatEntrance();*/
     }
 
     /**
