@@ -45,6 +45,12 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
+        android:key="drawer_bcoin"
+        android:summary="去除侧滑菜单里的B币钱包"
+        android:title="关闭B币钱包" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="drawer_vip_point"
         android:summary="去除侧滑菜单里的会员积分"
         android:title="关闭会员积分" />

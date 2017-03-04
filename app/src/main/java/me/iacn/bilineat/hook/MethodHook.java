@@ -187,6 +187,7 @@ public class MethodHook {
      * 去除侧边栏我的大会员
      */
     private void removeDrawerVip() {
+        final boolean bcoin = !XposedInit.xSharedPref.getBoolean("drawer_bcoin", false);
         final boolean myVip = !XposedInit.xSharedPref.getBoolean("drawer_my_vip", false);
         final boolean vipPoint = !XposedInit.xSharedPref.getBoolean("drawer_vip_point", false);
 
@@ -195,7 +196,7 @@ public class MethodHook {
         //    只在两个选项中有某个开启时才进行挂钩，而不是每次根据 Value 值去设置
         //    其他地方同理
 
-        if (myVip && vipPoint) return;
+        if (bcoin && myVip && vipPoint) return;
 
         findAndHookMethod("tv.danmaku.bili.ui.main.NavigationFragment", mClassLoader, "onViewCreated",
                 View.class, Bundle.class, new XC_MethodHook() {
@@ -203,7 +204,6 @@ public class MethodHook {
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         Class clazz = findClass("android.support.design.widget.NavigationView", mClassLoader);
                         Field field = findFirstFieldByExactType(param.thisObject.getClass(), clazz);
-
                         Menu menu = (Menu) callMethod(field.get(param.thisObject), "getMenu");
 
                         // 取得第二个 Menu，为 我的大会员
@@ -211,6 +211,9 @@ public class MethodHook {
 
                         // 取得第三个 Menu，为 会员积分
                         menu.getItem(2).setVisible(vipPoint);
+
+                        // 取得第九个 Menu，为 B币钱包
+                        menu.getItem(8).setVisible(bcoin);
                     }
                 });
     }
