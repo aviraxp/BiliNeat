@@ -77,14 +77,8 @@ public class MethodHook {
         hookThemeDialog();
         hookBangumi();
         hookMovie();
-        addNeatEntrance();
-
-        /*removeDrawerVip();
-        hookThemeDialog();
-        hookBangumi();
-        hookMovie();
         hookPage(homeIndex);
-        addNeatEntrance();*/
+        addNeatEntrance();
     }
 
     /**
@@ -265,16 +259,17 @@ public class MethodHook {
      * @param pageIndex 页面的角标值
      */
     private void hookPage(final int pageIndex) {
-        if (pageIndex != 1) {
-            findAndHookMethod("tv.danmaku.bili.ui.main.HomeFragment", mClassLoader,
-                    "onViewCreated", View.class, Bundle.class, new XC_MethodHook() {
+        // 默认为 「推荐」
+        if (pageIndex == 1) return;
 
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            setIntField(param.thisObject, "b", pageIndex);
-                        }
-                    });
-        }
+        findAndHookMethod("tv.danmaku.bili.ui.main.HomeFragment", mClassLoader,
+                "onViewCreated", View.class, Bundle.class, new XC_MethodHook() {
+
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        setIntField(param.thisObject, "c", pageIndex);
+                    }
+                });
     }
 
     /**
