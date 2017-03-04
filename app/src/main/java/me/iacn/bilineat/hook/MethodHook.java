@@ -67,7 +67,7 @@ public class MethodHook {
                 hookResult("dhx", "g", boolean.class, isDrawerPromote);
                 hookResult("dhx", "h", boolean.class, isFoundGame);
                 hookResult("dhx", "i", boolean.class, isCategoryGame);
-//                hookTheme("ent", "arr");
+                hookTheme("eqh", "ark");
 //                removeFoundMall("dwz");
 //                removePromoBanner("dyu");
                 break;
@@ -107,21 +107,22 @@ public class MethodHook {
      * @param paramName Hook主题的参数类型
      */
     private void hookTheme(String className, String paramName) {
-        findAndHookMethod("bl." + className, mClassLoader, "a", "bl." + paramName, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                if (param.args[0] == null) return;
+        findAndHookMethod("bl." + className, mClassLoader, "a",
+                "bl." + paramName, boolean.class, new XC_MethodHook() {
+                    @Override
+                    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                        if (param.args[0] == null) return;
 
-                List list = (List) getObjectField(param.args[0], "mList");
+                        List list = (List) getObjectField(param.args[0], "mList");
 
-                if (list != null) {
-                    for (Object theme : list) {
-                        setBooleanField(theme, "mIsFree", true);
-                        setIntField(theme, "mPrice", 0);
+                        if (list != null) {
+                            for (Object theme : list) {
+                                setBooleanField(theme, "mIsFree", true);
+                                setIntField(theme, "mPrice", 0);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     /**
