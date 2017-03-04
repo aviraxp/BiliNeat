@@ -68,7 +68,7 @@ public class MethodHook {
                 hookResult("dhx", "h", boolean.class, isFoundGame);
                 hookResult("dhx", "i", boolean.class, isCategoryGame);
                 hookTheme("eqh", "ark");
-//                removeFoundMall("dwz");
+                removeFoundMall("dzt");
 //                removePromoBanner("dyu");
                 break;
         }
