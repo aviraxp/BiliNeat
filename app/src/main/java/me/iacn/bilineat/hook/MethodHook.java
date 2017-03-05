@@ -69,7 +69,6 @@ public class MethodHook {
                 hookResult("dhx", "i", boolean.class, isCategoryGame);
                 hookTheme("eqh", "ark");
                 removeFoundMall("dzt");
-//                removePromoBanner("dyu");
                 break;
         }
 
@@ -147,6 +146,10 @@ public class MethodHook {
                 });
     }
 
+    /**
+     * 因官方在此处有较多变动
+     * 暂不做处理
+     */
     private void removePromoBanner(String className) {
         if (!XposedInit.xSharedPref.getBoolean("promo_banner", false)) return;
 
