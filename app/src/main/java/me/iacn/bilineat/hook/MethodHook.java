@@ -61,6 +61,7 @@ public class MethodHook {
 
         // 根据当前版本决定要Hook的类和方法名
         switch (currentVersion) {
+            case "5.0.1":
             case "5.0.0":
                 hookResult("dhx", "e", boolean.class, isCategoryGame);
                 hookResult("dhx", "f", boolean.class, isToolbarGame);
